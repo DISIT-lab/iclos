@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:icr="http://www.cloudicaro.it/cloud_ontology/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" targetNamespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" elementFormDefault="qualified" attributeFormDefault="qualified">
+    <xs:element name="type">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attribute name="about" type="xs:anyURI"/>
+    <xs:attribute name="resource">
+        <xs:simpleType>
+            <xs:restriction base="xs:anyURI"/>
+        </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="datatype" type="xs:anyURI"/>
+</xs:schema>

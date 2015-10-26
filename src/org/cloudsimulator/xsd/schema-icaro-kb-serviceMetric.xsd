@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:icr="http://www.cloudicaro.it/cloud_ontology/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" targetNamespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" elementFormDefault="qualified" attributeFormDefault="qualified">
+    <xs:include schemaLocation="schema-icaro-rdf.xsd"/>
+    <xs:import namespace="http://www.cloudicaro.it/cloud_ontology/core#" schemaLocation="schema-icaro-core.xsd"/>
+    <xs:element name="RDF">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:ServiceMetric" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

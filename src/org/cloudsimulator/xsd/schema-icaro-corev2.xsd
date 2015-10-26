@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:icr="http://www.cloudicaro.it/cloud_ontology/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" targetNamespace="http://www.cloudicaro.it/cloud_ontology/core#" elementFormDefault="qualified">
+    <xs:import namespace="http://xmlns.com/foaf/0.1/" schemaLocation="schema-icaro-foaf.xsd"/>
+    <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="schema-icaro-rdf.xsd"/>
+    <xs:element name="BusinessConfiguration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element name="hasContractId" type="xs:string"/>
+                <xs:element ref="icr:createdBy"/>
+                <xs:element ref="icr:administeredBy" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="hasPart" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="icr:IcaroApplication" minOccurs="0" maxOccurs="unbounded"/>
+                            <xs:element ref="icr:IcaroTenant" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute ref="rdf:resource"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="icr:hasSLA" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DataCenter">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element name="hasPart" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute ref="rdf:resource"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ExternalStorage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:hasModelName" minOccurs="0"/>
+                <xs:element name="hasPart">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="icr:SharedStorageVolume" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="icr:hasNetworkAdapter"/>
+                <xs:element ref="icr:hasMonitorIPAddress" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorInfo" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorState" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Firewall">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:hasModelName" minOccurs="0"/>
+                <xs:element ref="icr:hasNetworkAdapter"/>
+                <xs:element ref="icr:hasMonitorIPAddress" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorInfo" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorState" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="HostMachine">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:hasCPUCount"/>
+                <xs:element ref="icr:hasCPUSpeed" minOccurs="0"/>
+                <xs:element ref="icr:hasCPUType" minOccurs="0"/>
+                <xs:element ref="icr:hasMemorySize"/>
+                <xs:element ref="icr:hasLocalStorage"/>
+                <xs:element name="useSharedStorage" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute ref="rdf:resource" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="icr:hasNetworkAdapter"/>
+                <xs:element ref="icr:hasOS"/>
+                <xs:element ref="icr:isPartOf"/>
+                <xs:element ref="icr:hasCapacity" minOccurs="0"/>
+                <xs:element ref="icr:isInDomain" minOccurs="0"/>
+                <xs:element ref="icr:hasAuthUserName" minOccurs="0"/>
+                <xs:element ref="icr:hasAuthUserPassword" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorIPAddress" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorInfo" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorState" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="HostMachineCluster">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:isPartOf"/>
+                <xs:element ref="icr:hasCapacity" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="IcaroApplication">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="rdf:type"/>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:createdBy"/>
+                <xs:element ref="icr:administeredBy" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="icr:subscribedBy" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="icr:needs"/>
+                <xs:element ref="icr:hasSLA" minOccurs="0"/>
+                <xs:element ref="icr:hasCapacity" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="IcaroService">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="rdf:type"/>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:runsOnVM"/>
+                <xs:element ref="icr:supportsLanguage" minOccurs="0"/>
+                <xs:element ref="icr:usesTcpPort" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="icr:usesUdpPort" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="icr:hasMonitorIPAddress" minOccurs="0"/>
+                <xs:element ref="icr:hasProcessName" minOccurs="0"/>
+                <xs:element ref="icr:hasAuthUserName" minOccurs="0"/>
+                <xs:element ref="icr:hasAuthUserPassword" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorInfo" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorState" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="IcaroTenant">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:isTenantOf"/>
+                <xs:element ref="icr:createdBy"/>
+                <xs:element ref="icr:administeredBy" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="icr:hasMonitorInfo" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorState" minOccurs="0"/>
+                <xs:element ref="icr:hasSLA" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="IcaroApplicationModule">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="rdf:type" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="LocalNetwork">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:hasSubNetworkMask" minOccurs="0"/>
+                <xs:element ref="icr:hasIPAddress" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="MonitorInfo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasMetricName"/>
+                <xs:element ref="icr:hasArguments" minOccurs="0"/>
+                <xs:element ref="icr:hasWarningValue" minOccurs="0"/>
+                <xs:element ref="icr:hasCriticalValue" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorState" minOccurs="0"/>
+                <xs:element ref="icr:hasMaxCheckAttempts" minOccurs="0"/>
+                <xs:element ref="icr:hasCheckInterval" minOccurs="0"/>
+                <xs:element ref="icr:hasCheckMode" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="NetworkAdapter">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasIPAddress"/>
+                <xs:element ref="icr:boundToNetwork"/>
+                <xs:element ref="icr:hasType" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Router">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:hasModelName" minOccurs="0"/>
+                <xs:element ref="icr:hasNetworkAdapter"/>
+                <xs:element ref="icr:hasMonitorIPAddress" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorInfo" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorState" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ServiceLevelAction">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:runWorkflow"/>
+                <xs:element name="hasWorkflowArguments" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ServiceLevelAgreement">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasSLObjective"/>
+                <xs:element ref="icr:hasStartTime"/>
+                <xs:element ref="icr:hasEndTime"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ServiceLevelObjective">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasSLAction"/>
+                <xs:element ref="icr:hasSLMetric"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ServiceLevelSimpleMetric">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasMetricName"/>
+                <xs:choice>
+                    <xs:element ref="icr:hasMetricValueLessThan"/>
+                    <xs:element ref="icr:hasMetricValueGreaterThan"/>
+                    <xs:element ref="icr:hasMetricValue"/>
+                </xs:choice>
+                <xs:element ref="icr:hasMetricUnit"/>
+                <xs:element ref="icr:dependsOn"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ServiceLevelAndMetric" type="icr:ServiceLevelDerivedMetricType"/>
+    <xs:element name="ServiceLevelOrMetric" type="icr:ServiceLevelDerivedMetricType"/>
+    <xs:complexType name="ServiceLevelDerivedMetricType">
+        <xs:sequence>
+            <xs:element name="dependsOn" type="icr:dependsOnType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ServiceMetric">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:atTime"/>
+                <xs:element ref="icr:hasMetricName"/>
+                <xs:element ref="icr:hasMetricValue"/>
+                <xs:element ref="icr:hasMetricUnit" minOccurs="0"/>
+                <xs:element ref="icr:dependsOn"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="User">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="foaf:name"/>
+                <xs:element ref="foaf:mbox"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="VirtualMachine">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:hasCPUCount"/>
+                <xs:element ref="icr:hasCPUSpeedReservation" minOccurs="0"/>
+                <xs:element ref="icr:hasCPUSpeedLimit" minOccurs="0"/>
+                <xs:element ref="icr:hasMemorySize"/>
+                <xs:element ref="icr:hasMemoryReservation" minOccurs="0"/>
+                <xs:element ref="icr:hasMemoryLimit" minOccurs="0"/>
+                <xs:element ref="icr:hasVirtualStorage"/>
+                <xs:element ref="icr:hasNetworkAdapter"/>
+                <xs:element name="hasExternalIPAddress" minOccurs="0"/>
+                <xs:element ref="icr:hasOS"/>
+                <xs:element ref="icr:isPartOf"/>
+                <xs:element ref="icr:isStoredOn"/>
+                <xs:element ref="icr:isInstanceOf" minOccurs="0"/>
+                <xs:element ref="icr:isInDomain" minOccurs="0"/>
+                <xs:element ref="icr:hasAuthUserName" minOccurs="0"/>
+                <xs:element ref="icr:hasAuthUserPassword" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorIPAddress" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorInfo" minOccurs="0"/>
+                <xs:element ref="icr:hasMonitorState" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="VirtualMachineTemplate">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:hasCPUCount"/>
+                <xs:element ref="icr:hasCPUSpeedReservation" minOccurs="0"/>
+                <xs:element ref="icr:hasCPUSpeedLimit" minOccurs="0"/>
+                <xs:element ref="icr:hasMemorySize"/>
+                <xs:element ref="icr:hasVirtualStorage"/>
+                <xs:element ref="icr:hasNetworkAdapter"/>
+                <xs:element ref="icr:hasOS"/>
+                <xs:element ref="icr:isPartOf"/>
+                <xs:element ref="icr:isStoredOn"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="administeredBy">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="boundToNetwork">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createdBy">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="dependsOn">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="dependsOnType">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element ref="icr:ServiceLevelSimpleMetric"/>
+            <xs:element ref="icr:ServiceLevelAndMetric"/>
+            <xs:element ref="icr:ServiceLevelOrMetric"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="hasArguments" type="xs:string"/>
+    <xs:element name="hasAuthUserName" type="xs:string"/>
+    <xs:element name="hasAuthUserPassword" type="xs:string"/>
+    <xs:element name="hasCPUCount">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:positiveInteger">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#positiveInteger"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasCheckInterval">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:positiveInteger">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#positiveInteger"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasCriticalValue">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasDiskSize">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasEndTime">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:dateTime">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#dateTime"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasIPAddress">
+        <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="hasIdentifier" type="xs:string"/>
+    <xs:element name="hasMaxCheckAttempts">
+        <xs:complexType mixed="true">
+            <xs:attribute ref="rdf:datatype" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasMemorySize">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasMetricName" type="xs:string"/>
+    <xs:element name="hasMetricUnit">
+        <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="hasMetricValue">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasMetricValueLessThan">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasMetricValueGreaterThan">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasMonitorInfo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:MonitorInfo" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasName" type="xs:string"/>
+    <xs:element name="hasNetworkAdapter">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:NetworkAdapter" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasOS">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasSLA">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:ServiceLevelAgreement"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasSLAction">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:ServiceLevelAction" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasSLMetric" type="icr:hasSLMetricType"/>
+    <xs:complexType name="hasSLMetricType">
+        <xs:choice>
+            <xs:element ref="icr:ServiceLevelSimpleMetric"/>
+            <xs:element ref="icr:ServiceLevelAndMetric"/>
+            <xs:element ref="icr:ServiceLevelOrMetric"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="hasSLObjective">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:ServiceLevelObjective" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasStartTime">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:dateTime">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#dateTime"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasWarningValue">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="isInDomain">
+        <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+                <xs:enumeration value="DC01"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="isInstanceOf">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="isPartOf">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="isTenantOf">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="needs">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:IcaroService" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="IcaroApplication" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute ref="rdf:resource" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="icr:IcaroApplicationModule" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="runsOnVM">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="subscribedBy">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="supportsLanguage">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="usesTcpPort">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:unsignedShort">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="usesUdpPort">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:unsignedShort">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasProcessName" type="xs:string"/>
+    <xs:element name="hasMonitorIPAddress" type="xs:string"/>
+    <xs:element name="hasModelName" type="xs:string"/>
+    <xs:element name="atTime">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:dateTime">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#dateTime"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasMonitorState">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="enabled"/>
+                <xs:enumeration value="disabled"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="hasCheckMode">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="active"/>
+                <xs:enumeration value="passive"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="hasType" type="xs:string"/>
+    <xs:element name="hasCapacity">
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasCPUSpeed">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasCPUType" type="xs:string"/>
+    <xs:element name="hasSubNetworkMask" type="xs:string"/>
+    <xs:element name="hasCPUSpeedReservation">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasCPUSpeedLimit">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="LocalStorage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:hasDiskSize"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasLocalStorage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:LocalStorage" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasMemoryReservation">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasMemoryLimit">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:decimal">
+                    <xs:attribute ref="rdf:datatype" use="required" fixed="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="isStoredOn">
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasVirtualStorage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:VirtualStorage" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="VirtualStorage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:hasDiskSize"/>
+                <xs:element ref="icr:isStoredOn" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="runWorkflow" type="xs:string"/>
+    <xs:element name="SharedStorageVolume">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="icr:hasName"/>
+                <xs:element ref="icr:hasIdentifier"/>
+                <xs:element ref="icr:hasDiskSize"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
