@@ -1,0 +1,551 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pf="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<!-- Header con il nome del programma, del laboratorio e il logo di Icaro -->
+	<h:panelGroup styleClass="header" id="gradient">
+		<h:link outcome="home">
+			<h:graphicImage styleClass="left-image logo" library="images"
+				name="icaro.png" width="90px" />
+		</h:link>
+		<h:panelGroup styleClass="text">
+	    Cloud Simulator 
+	    <h:outputLink value="http://www.disit.org/drupal/?q=node/5482"
+				target="_blank">
+				<h:graphicImage styleClass="image" library="images"
+					name="info-icon.png" width="20px" />
+			</h:outputLink>
+		</h:panelGroup>
+		<br />
+		<h:outputLink value="http://www.disit.org" styleClass="subtext"
+			target="_blank">
+	    DISIT - Distributed Systems and Internet Technology Lab
+	  </h:outputLink>
+	</h:panelGroup>
+
+	<!-- Barra di navigazione contenente tutti i link utili per far funzionare il por -->
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<h:panelGroup layout="block" styleClass="container-fluid">
+		<h:panelGroup layout="block" styleClass="navbar-header">
+		
+	<!-- Bottone che appare quando si abbassa la risoluzione delle schermo -->
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			
+	<!-- Link che indica il titolo della pagina nella quale si trova l'utente -->
+			<a class="navbar-brand"> <h:outputText value="#{navigator.title}"
+					escape="false" />
+			</a>
+		</h:panelGroup>
+		<h:panelGroup layout="block" styleClass="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+
+	<!-- Link presenti nella home -->
+				<li><h:link id="linkCreateDataCenter" outcome="dataCenter"
+						title="Create a DataCenter" rendered="#{navigator.home}"
+						value="Create a DataCenter" /></li>
+				<li><h:link id="linkCreateBusinessConfiguration"
+						outcome="virtualMachine" title="Create a BusinessConfiguration"
+						rendered="#{navigator.home}"
+						value="Create a BusinessConfiguration" /></li>
+				<li><h:link id="linkCreateServiceMetric"
+						outcome="serviceMetric" title="Create ServiceMetrics"
+						rendered="#{navigator.home}" value="Create ServiceMetrics" /></li>
+				
+				<li><h:link id="linkDataCenterVirtualMachinePlacementChoice"
+						outcome="dataCenterVirtualMachinePlacementChoice" title="VM choice"
+						rendered="#{navigator.home}" value="Placement" /></li>
+						
+				<li><h:link id="linkDataCenterSimulation"
+						outcome="dataCenterSimulationChoice" title="Simulate DataCenter"
+						rendered="#{navigator.home}" value="Simulate DataCenter" /></li>
+				<li><h:link id="linkAnalyzeMetrics" outcome="analyzeMetrics"
+						title="Analyze Metrics" rendered="#{navigator.home}"
+						value="Analyze Metrics" /></li>
+				<li><h:link id="linkCollectData" outcome="collectData"
+						title="Collect Data" rendered="#{navigator.home}"
+						value="Collect Data" /></li>
+				<li><h:link id="linkAnalyzeWorkLoad" outcome="cloneStructure"
+						title="Analyze WorkLoad" rendered="#{navigator.home}"
+						value="Analyze WorkLoad" /></li>
+
+	<!-- Command link (clear) che consentono di svuotare i form per reinserire le informazioni corrette -->
+				<li><h:form>
+						<h:commandLink id="clearDataCenterViewLink"
+							action="#{dataCenterViewer.dataCenterViewClear()}"
+							rendered="#{navigator.dataCenter}" value="Clear"
+							styleClass="btn btn-default navbar-btn" />
+					</h:form></li>
+				<li><h:form>
+						<h:commandLink id="clearBusinessConfigurationViewLink"
+							action="#{businessConfigurationViewer.businessConfigurationViewClear()}"
+							rendered="#{navigator.businessConfiguration}" value="Clear"
+							styleClass="btn btn-default navbar-btn" />
+					</h:form></li>
+				<li><h:form>
+						<h:commandLink id="clearVirtualMachineViewLink"
+							action="#{virtualMachineViewer.virtualMachineViewClear()}"
+							rendered="#{navigator.virtualMachine}" value="Clear"
+							styleClass="btn btn-default navbar-btn" />
+					</h:form></li>
+				<li><h:form>
+						<h:commandLink id="clearServiceMetricViewLink"
+							action="#{serviceMetricViewer.serviceMetricViewClear()}"
+							rendered="#{navigator.serviceMetric}" value="Clear"
+							styleClass="btn btn-default navbar-btn" />
+					</h:form></li>
+
+    <!-- Command link che consentono di visualizzare il form per spedire le informazioni generate alla KB -->
+				<li><h:form>
+						<h:commandLink id="showSendFormDataCenter"
+							action="#{dataCenterController.showSendForm}"
+							styleClass="btn btn-default navbar-btn" value="SendToKB"
+							rendered="#{navigator.visualizeXMLDataCenter}" />
+					</h:form></li>
+				<li><h:form>
+						<h:commandLink id="showSendFormBusinessConfiguration"
+							action="#{businessConfigurationController.showSendForm}"
+							styleClass="btn btn-default navbar-btn" value="SendToKB"
+							rendered="#{navigator.visualizeXMLBusinessConfiguration}" />
+					</h:form></li>
+				<li><h:form>
+						<h:commandLink id="showSendFormServiceMetric"
+							action="#{serviceMetricController.showSendForm}"
+							styleClass="btn btn-default navbar-btn" value="SendToKB"
+							rendered="#{navigator.visualizeXMLServiceMetric}" />
+					</h:form></li>
+					
+	<!-- Command link che consentono di scaricare sul PC dell'utente le informazioni generate -->	
+				<li><h:form>
+						<h:commandLink id="downloadFileButtonDataCenter"
+							action="#{dataCenterController.getXmlRdfOfDataCenterFromServer()}"
+							styleClass="btn btn-default navbar-btn"
+							rendered="#{navigator.visualizeXMLDataCenter}"
+							value="Download XML" />
+					</h:form></li>
+				<li><h:form>
+						<h:commandLink id="downloadFileButtonBusinessConfiguration"
+							action="#{businessConfigurationController.getXmlRdfOfBusinessConfigurationFromServer()}"
+							styleClass="btn btn-default navbar-btn"
+							rendered="#{navigator.visualizeXMLBusinessConfiguration}"
+							value="Download XML" />
+					</h:form></li>
+				<li><h:form>
+						<h:commandLink id="downloadFileButtonServiceMetric"
+							action="#{serviceMetricController.getXmlRdfOfServiceMetricFromServer()}"
+							styleClass="btn btn-default navbar-btn"
+							rendered="#{navigator.visualizeXMLServiceMetric}"
+							value="Download XML" />
+					</h:form></li>
+
+	<!-- Link di utilità per non dover ripassare dalla home per fare le operazioni di creazione di una BC o della simulazione di un DC -->
+				<li><h:link
+						id="linkCreateBusinessConfigurationDC"
+						outcome="virtualMachine" title="Create a BusinessConfiguration"
+						rendered="#{navigator.visualizeXMLDataCenter and dataCenterController.sendDone == 'done'}"
+						value="Create a BusinessConfiguration">
+						<f:param name="cid" value="#{navigator.conversation.id}" />
+					</h:link></li>
+				<li><h:link id="linkDataCenterSimulationBC"
+						outcome="dataCenterSimulationChoice" title="Simulate DataCenter"
+						rendered="#{navigator.visualizeXMLBusinessConfiguration and businessConfigurationController.sendDone == 'done'}"
+						value="Simulate DataCenter">
+						<f:param name="cid" value="#{navigator.conversation.id}" />
+					</h:link></li>
+					
+					
+	<!-- Link che si trovano nella pagina di scelta di un dataCenter. Si deve inserire l'indirizzo della KB e poi selezionare uno dei dataCenter caricati -->				
+					<li><h:form styleClass="form-inline">
+						<h:inputText id="ipOfKBForDatacenterChoice"
+							value="#{dataCenterController.ipOfKB}" class="form-control"
+							rendered="#{navigator.dataCenterChoice}"
+							readonly="#{dataCenterController.ipInserted}" required="true">
+							<f:validator for="ipOfKBForDatacenterChoice" validatorId="URLValidator" />
+						</h:inputText>
+						<h:message for="ipOfKBForDatacenterChoice"
+							styleClass="alert alert-danger"
+							rendered="#{navigator.dataCenterChoice}" />
+						<h:commandLink id="okInsertedIp" value="Ok"
+							action="#{dataCenterController.invertIpInserted()}"
+							rendered="#{navigator.dataCenterChoice and not dataCenterController.ipInserted}"
+							styleClass="btn btn-default navbar-btn" />
+						<h:commandLink id="changeInsertedIp" value="Change"
+							action="#{dataCenterController.invertIpInserted()}"
+							rendered="#{navigator.dataCenterChoice and dataCenterController.ipInserted}"
+							styleClass="btn btn-default navbar-btn" />
+					    </h:form></li>
+				    <li><h:form styleClass="form-inline"
+						rendered="#{navigator.dataCenterChoice and dataCenterController.ipInserted}">
+						<h:selectOneMenu value="#{dataCenterController.dataCenterChoice}"
+							styleClass="form-control" id="inputSelectOneMenuDataCenterChoice">
+							<f:selectItems var="inputSelectOneMenu"
+								value="#{dynamicAttributesRepository.dataCenterChoiceSelectOneMenu.get(0).listSelectOneMenu}"
+								itemLabel="#{inputSelectOneMenu.label}"
+								itemValue="#{inputSelectOneMenu.value}" />
+						</h:selectOneMenu>
+						<h:commandLink id="loadDataCenterFromKB"
+							action="#{dataCenterController.loadDataCenter()}"
+							rendered="#{navigator.dataCenterChoice}" value="Load"
+							styleClass="btn btn-default navbar-btn" />
+					   </h:form></li>
+				    <li><h:form>
+						<h:commandLink id="nextDataCenterChoice"
+							action="#{navigator.goToRightPage()}"
+							rendered="#{navigator.dataCenterChoice and not empty dataCenterController.dataCenterChoice and dataCenterController.ipInserted}"
+							value="Next" styleClass="btn btn-default navbar-btn" />
+					    </h:form></li>
+					
+    <!-- Link che si trovano nella pagina di simulazione realTime di un dataCenter. -->
+				    <li><h:form>
+						<h:commandLink id="startDataCenterSimulation"
+							action="#{dataCenterSimulator.startSimulation()}"
+							rendered="#{navigator.dataCenterSimulationRealTime and !dataCenterSimulator.simulationStarted}"
+							value="Start" styleClass="btn btn-success navbar-btn" />
+					    </h:form></li>
+				    <li><h:form>
+						<h:commandLink id="stopDataCenterSimulation"
+							action="#{dataCenterSimulator.stopSimulation()}"
+							rendered="#{navigator.dataCenterSimulationRealTime and dataCenterSimulator.simulationStarted}"
+							value="Stop" styleClass="btn btn-danger navbar-btn">
+							<f:actionListener binding="#{dataCenterSimulator.stopSendToKB()}" />
+						</h:commandLink>
+					    </h:form></li>
+				    <li><h:form styleClass="form-inline">
+						<h:inputText value="#{restAPI.protocol}" readonly="true"
+							styleClass="form-control"
+							rendered="#{navigator.dataCenterSimulationRealTime and dataCenterSimulator.simulationStarted}"
+							style="width: 70px" />
+						<h:inputText value="#{dataCenterSimulator.ipOfKB}"
+							id="inputTextIPAddressSendToKB" class="form-control"
+							rendered="#{navigator.dataCenterSimulationRealTime and dataCenterSimulator.simulationStarted}"
+							required="true"
+							readonly="#{dataCenterSimulator.dataCenterMetricSender.started}">
+							<f:validator for="ipOfKBForDatacenterChoice"
+								validatorId="URLValidator" />
+						</h:inputText>
+						<h:message for="inputTextIPAddressSendToKB"
+							styleClass="alert alert-danger"
+							rendered="#{navigator.dataCenterSimulationRealTime and dataCenterSimulator.simulationStarted}" />
+						<h:inputText id="inputTextPathSendToKB" styleClass="form-control"
+							p:placeholder="Insert path of RESTAPI"
+							value="#{restAPIRepository.kbServiceMetric}"
+							rendered="#{navigator.dataCenterSimulationRealTime and dataCenterSimulator.simulationStarted}"
+							readonly="true" />
+						<h:inputText id="inputTextIntervalToSend"
+							styleClass="form-control" style="width: 50px"
+							p:placeholder="Insert interval time between two send (in sec)"
+							value="#{dataCenterSimulator.dataCenterMetricSender.periodTimeSend}"
+							converter="DigitsOnlyConverter"
+							converterMessage="You must insert digit!!!"
+							readonly="#{dataCenterSimulator.dataCenterMetricSender.started}"
+							rendered="#{navigator.dataCenterSimulationRealTime and dataCenterSimulator.simulationStarted}" />
+						<h:message for="inputTextIntervalToSend"
+							styleClass="alert alert-danger"
+							rendered="#{navigator.dataCenterSimulationRealTime and dataCenterSimulator.simulationStarted}" />
+						<h:commandLink id="startSendToKB" value="StartSendToKB"
+							action="#{dataCenterSimulator.startSendToKB()}"
+							rendered="#{navigator.dataCenterSimulationRealTime and dataCenterSimulator.simulationStarted and !dataCenterSimulator.dataCenterMetricSender.started}"
+							styleClass="btn btn-default navbar-btn">
+						</h:commandLink>
+						<h:commandLink id="stopSendToKB" value="StopSendToKB"
+							action="#{dataCenterSimulator.stopSendToKB()}"
+							rendered="#{navigator.dataCenterSimulationRealTime and dataCenterSimulator.simulationStarted and dataCenterSimulator.dataCenterMetricSender.started}"
+							styleClass="btn btn-default navbar-btn" />
+					    </h:form></li>
+				    <li><h:form>
+						<h:commandLink id="linkCreateBusinessConfigurationSimulator"
+							styleClass="btn btn-default navbar-btn"
+							action="#{fakeSCE.invertViewVirtualMachineForm()}"
+							title="Create a BusinessConfiguration"
+							rendered="#{navigator.dataCenterSimulationRealTime and not fakeSCE.viewVirtualMachineForm and not fakeSCE.viewBusinessConfigurationForm}"
+							value="Create a BusinessConfiguration">
+							<f:actionListener binding="#{dataCenterSimulator.extendRestoreRefreshTime()}" />
+						</h:commandLink>
+					    </h:form></li>
+				    <li><h:form>
+						<h:commandLink id="linkCloseBusinessConfigurationSimulator"
+							styleClass="btn btn-default navbar-btn"
+							action="#{fakeSCE.invertViewBusinessConfigurationForm()}"
+							title="Close BusinessConfiguration"
+							rendered="#{navigator.dataCenterSimulationRealTime and fakeSCE.viewBusinessConfigurationForm}"
+							value="Close BusinessConfiguration">
+							<f:actionListener binding="#{dataCenterSimulator.extendRestoreRefreshTime()}" />
+						</h:commandLink>
+					    </h:form></li>
+				    <li><h:form>
+						<h:commandLink id="linkCloseVirtualMachineSimulator"
+							styleClass="btn btn-default navbar-btn"
+							action="#{fakeSCE.invertViewVirtualMachineForm()}"
+							title="Close VirtualMachine"
+							rendered="#{navigator.dataCenterSimulationRealTime and fakeSCE.viewVirtualMachineForm}"
+							value="Close VirtualMachine">
+							<f:actionListener binding="#{dataCenterSimulator.extendRestoreRefreshTime()}" />
+						</h:commandLink>
+					    </h:form></li>	
+					
+	<!-- Link che si trovano nella pagina di simulazione faster di un dataCenter. -->			
+					<li><h:form styleClass="form-inline">
+						<h:panelGroup layout="block" styleClass="panel-heading">
+							<pf:calendar
+								value="#{dataCenterController.dataCenterSimulatorFaster.dateFrom}"
+								pattern="#{dataCenterController.dataCenterSimulatorFaster.DATEFORMATFORCALENDAR}"
+								placeholder="From Date" required="true" id="calendarDateFrom"
+								requiredMessage="From Date must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterSimulatorFaster.existsCollectedData}"
+								style="width: 150px" autocomplete="false" />
+							<h:message styleClass="alert alert-danger" for="calendarDateFrom"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputTextDaysToSimulate"
+								styleClass="form-control" p:placeholder="Days"
+								value="#{dataCenterController.dataCenterSimulatorFaster.days}"
+								validatorMessage="The port number must be in the set [1, 365]"
+								converter="DigitsOnlyConverter"
+								converterMessage="You must insert digit!!!" required="true"
+								requiredMessage="Days must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 60px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterSimulatorFaster.existsCollectedData}">
+								<f:validateLongRange maximum="365" minimum="1" for="inputTextDaysToSimulate" />
+							</h:inputText>
+							<h:message styleClass="alert alert-danger"
+								for="inputTextDaysToSimulate"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputUserNagiosServer" styleClass="form-control"
+								p:placeholder="User"
+								value="#{dataCenterController.dataCenterSimulatorFaster.nagiosServer.user}"
+								required="true" requiredMessage="User must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 70px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterSimulatorFaster.existsCollectedData}" />
+							<h:message styleClass="alert alert-danger"
+								for="inputUserNagiosServer"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputPasswordNagiosServer"
+								styleClass="form-control" p:placeholder="Password"
+								value="#{dataCenterController.dataCenterSimulatorFaster.nagiosServer.password}"
+								required="true" requiredMessage="Password must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 90px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterSimulatorFaster.existsCollectedData}" />
+							<h:message styleClass="alert alert-danger"
+								for="inputPasswordNagiosServer"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputIPAddressNagiosServer"
+								styleClass="form-control" p:placeholder="IP Address"
+								value="#{dataCenterController.dataCenterSimulatorFaster.nagiosServer.ipAddress}"
+								required="true" requiredMessage="IPAddress must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 120px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterSimulatorFaster.existsCollectedData}">
+								<f:validator for="inputIPAddressNagiosServer" validatorId="URLValidator" />
+							</h:inputText>
+							<h:message styleClass="alert alert-danger"
+								for="inputIPAddressNagiosServer"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputPortNagiosServer" styleClass="form-control"
+								p:placeholder="Port"
+								value="#{dataCenterController.dataCenterSimulatorFaster.nagiosServer.port}"
+								validatorMessage="The port number must be in the set [1, 65535]"
+								converter="DigitsOnlyConverter"
+								converterMessage="You must insert digit!!!" required="true"
+								requiredMessage="Port must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 60px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterSimulatorFaster.existsCollectedData}">
+								<f:validateLongRange maximum="65535" minimum="1" for="inputPortNagiosServer" />
+							</h:inputText>
+							<h:message styleClass="alert alert-danger"
+								for="inputPortNagiosServer"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputDirectoryNagiosServer"
+								styleClass="form-control"
+								p:placeholder="Directory inside NagiosServer"
+								value="#{dataCenterController.dataCenterSimulatorFaster.nagiosServer.directoryInside}"
+								required="true" requiredMessage="Directory must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 250px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterSimulatorFaster.existsCollectedData}" />
+							<h:message styleClass="alert alert-danger"
+								for="inputDirectoryNagiosServer"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:commandLink id="simulateDataCenter"
+								action="#{dataCenterController.simulate()}"
+								styleClass="btn btn-default" value="Simulate"
+								rendered="#{navigator.dataCenterSimulationFaster and not dataCenterController.simulationFasterStarted and dataCenterController.dataCenterSimulatorFaster.existsCollectedData}" />
+							<h:commandLink id="simulateDataCenterDisabled"
+								styleClass="btn btn-default disabled" value="Simulate"
+								rendered="#{navigator.dataCenterSimulationFaster and (dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterSimulatorFaster.existsCollectedData)}"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterSimulatorFaster.existsCollectedData}" />
+						</h:panelGroup>
+					    </h:form></li>
+					    
+	<!-- Link che si trovano nella pagina di simulazione di allocazione delle VM di un dataCenter. -->			
+					<li><h:form styleClass="form-inline">
+						<h:panelGroup layout="block" styleClass="panel-heading">
+							<pf:calendar
+								value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.dateFrom}"
+								pattern="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.DATEFORMATFORCALENDAR}"
+								placeholder="From Date" required="true" id="calendarDateFrom"
+								requiredMessage="From Date must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData}"
+								style="width: 150px" autocomplete="false" />
+							<h:message styleClass="alert alert-danger" for="calendarDateFrom"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputTextDaysToSimulate"
+								styleClass="form-control" p:placeholder="Days"
+								value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.days}"
+								validatorMessage="The port number must be in the set [1, 365]"
+								converter="DigitsOnlyConverter"
+								converterMessage="You must insert digit!!!" required="true"
+								requiredMessage="Days must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 60px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData}">
+								<f:validateLongRange maximum="365" minimum="1" for="inputTextDaysToSimulate" />
+							</h:inputText>
+							<h:message styleClass="alert alert-danger"
+								for="inputTextDaysToSimulate"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputUserNagiosServer" styleClass="form-control"
+								p:placeholder="User"
+								value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.nagiosServer.user}"
+								required="true" requiredMessage="User must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 70px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData}" />
+							<h:message styleClass="alert alert-danger"
+								for="inputUserNagiosServer"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputPasswordNagiosServer"
+								styleClass="form-control" p:placeholder="Password"
+								value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.nagiosServer.password}"
+								required="true" requiredMessage="Password must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 90px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData}" />
+							<h:message styleClass="alert alert-danger"
+								for="inputPasswordNagiosServer"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputIPAddressNagiosServer"
+								styleClass="form-control" p:placeholder="IP Address"
+								value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.nagiosServer.ipAddress}"
+								required="true" requiredMessage="IPAddress must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 120px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData}">
+								<f:validator for="inputIPAddressNagiosServer" validatorId="URLValidator" />
+							</h:inputText>
+							<h:message styleClass="alert alert-danger"
+								for="inputIPAddressNagiosServer"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputPortNagiosServer" styleClass="form-control"
+								p:placeholder="Port"
+								value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.nagiosServer.port}"
+								validatorMessage="The port number must be in the set [1, 65535]"
+								converter="DigitsOnlyConverter"
+								converterMessage="You must insert digit!!!" required="true"
+								requiredMessage="Port must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 60px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData}">
+								<f:validateLongRange maximum="65535" minimum="1" for="inputPortNagiosServer" />
+							</h:inputText>
+							<h:message styleClass="alert alert-danger"
+								for="inputPortNagiosServer"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:inputText id="inputDirectoryNagiosServer"
+								styleClass="form-control"
+								p:placeholder="Directory inside NagiosServer"
+								value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.nagiosServer.directoryInside}"
+								required="true" requiredMessage="Directory must be inserted."
+								rendered="#{navigator.dataCenterSimulationFaster}"
+								style="width: 250px"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData}" />
+							<h:message styleClass="alert alert-danger"
+								for="inputDirectoryNagiosServer"
+								rendered="#{navigator.dataCenterSimulationFaster}" />
+							<h:commandLink id="simulateDataCenter"
+								action="#{dataCenterController.simulate()}"
+								styleClass="btn btn-default" value="Simulate"
+								rendered="#{navigator.dataCenterSimulationFaster and not dataCenterController.simulationFasterStarted and dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData}" />
+							<h:commandLink id="simulateDataCenterDisabled"
+								styleClass="btn btn-default disabled" value="Simulate"
+								rendered="#{navigator.dataCenterSimulationFaster and (dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData)}"
+								disabled="#{dataCenterController.simulationFasterStarted or not dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData}" />
+						</h:panelGroup>
+					    </h:form></li>
+					    
+<!-- Componenti nuovi aggiunti per prova -->
+					<li><h:form styleClass="form-inline">
+						<h:inputText id="ipOfKBForCloneStructure"
+							value="#{analyzeWorkLoadController.ipOfKB}" class="form-control"
+							rendered="#{navigator.cloneStructure}"
+							readonly="#{analyzeWorkLoadController.ipInserted}" required="true">
+							<f:validator for="ipOfKBForCloneStructure" validatorId="URLValidator" />
+						</h:inputText>
+						<h:message for="ipOfKBForCloneStructure"
+							styleClass="alert alert-danger"
+							rendered="#{navigator.cloneStructure}" />
+						<h:commandLink id="okInsertedIp" value="Ok"
+							action="#{analyzeWorkLoadController.invertIpInserted()}"
+							rendered="#{navigator.cloneStructure and not analyzeWorkLoadController.ipInserted}"
+							styleClass="btn btn-default navbar-btn" />
+						<h:commandLink id="changeInsertedIp" value="Change"
+							action="#{analyzeWorkLoadController.invertIpInserted()}"
+							rendered="#{navigator.cloneStructure and analyzeWorkLoadController.ipInserted}"
+							styleClass="btn btn-default navbar-btn" />
+					    </h:form></li>
+			</ul>
+			
+			<ul class="nav navbar-nav navbar-right">
+			
+	<!-- Due pulsanti di back che differiscono per la propagazione della conversazione che uno fa e l'altro no -->
+				<c:if test="#{not empty navigator.conversation.id}">
+					<li><h:link id="linkBack" outcome="back" value="Back"
+							title="Back" rendered="#{not navigator.home}">
+							<f:param name="cid" value="#{navigator.conversation.id}" />
+						</h:link></li>
+				</c:if>
+				<c:if test="#{empty navigator.conversation.id}">
+					<li><h:link id="linkBack" outcome="back" value="Back"
+							title="Back" rendered="#{not navigator.home}" /></li>
+				</c:if>
+				
+	<!-- Pulsante di home che viene visulizzato sulle pagine che hanno una profondità di almeno due pagine rispetto alla home -->
+				<li class="active"><h:link id="linkHome" outcome="home"
+						title="Home"
+						rendered="#{not navigator.home and not navigator.dataCenterChoice and not navigator.dataCenterSimulationChoice and not navigator.businessConfiguration and not navigator.dataCenter and not navigator.serviceMetric and not navigator.collectData and not navigator.configuration}"
+						height="20px" width="20px">
+						<h:graphicImage library="images" name="home.png"
+							rendered="#{not navigator.home and not navigator.dataCenterChoice and not navigator.dataCenterSimulationChoice and not navigator.businessConfiguration and not navigator.dataCenter and not navigator.serviceMetric and not navigator.collectData and not navigator.configuration}"
+							height="20px" width="20px" />
+					</h:link></li>
+					
+	<!-- Pulsante che consente di cambiare i file di configurazione che viene mostrato sulla home -->
+				<li class="active"><h:link id="linkConfiguration"
+						outcome="configuration" title="Configuration"
+						rendered="#{navigator.home }" height="20px" width="20px">
+						<h:graphicImage library="images" name="configuration.png"
+							rendered="#{navigator.home}" height="20px" width="20px" />
+					</h:link></li>
+
+			</ul>
+		</h:panelGroup>
+	</h:panelGroup> 
+	</nav>
+
+
+</ui:composition>

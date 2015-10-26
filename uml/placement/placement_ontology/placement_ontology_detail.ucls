@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.8" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="org.cloudsimulator.placement.ontology.DataCenterMachinePlacement" 
+    project="CloudSimulator" 
+    file="/CloudSimulator/src/org/cloudsimulator/placement/ontology/DataCenterMachinePlacement.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="244" y="188"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="org.cloudsimulator.placement.ontology.BaseMachinePlacementContainer" 
+    project="CloudSimulator" 
+    file="/CloudSimulator/src/org/cloudsimulator/placement/ontology/BaseMachinePlacementContainer.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="537" width="260" x="498" y="37"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="org.cloudsimulator.placement.ontology.HostMachinePlacement" 
+    project="CloudSimulator" file="/CloudSimulator/src/org/cloudsimulator/placement/ontology/HostMachinePlacement.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="994" y="359"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="org.cloudsimulator.placement.ontology.VirtualMachinePlacement" 
+    project="CloudSimulator" 
+    file="/CloudSimulator/src/org/cloudsimulator/placement/ontology/VirtualMachinePlacement.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="572" y="1071"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="5">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="6">    
+    <bendpoint x="233" y="719"/>    
+    <bendpoint x="538" y="714"/>    
+    <bendpoint x="714" y="713"/>    
+    <bendpoint x="996" y="708"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="7" name="assignedMachines">        
+        <position height="0" width="0" x="47" y="-516"/>      
+      </attribute>      
+      <multiplicity id="8" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="47" y="-516"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="9">    
+    <bendpoint x="1104" y="672"/>    
+    <bendpoint x="1112" y="878"/>    
+    <bendpoint x="1114" y="1076"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="10" name="assignedMachines">        
+        <position height="0" width="0" x="-158" y="-897"/>      
+      </attribute>      
+      <multiplicity id="11" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-158" y="-897"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="12">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

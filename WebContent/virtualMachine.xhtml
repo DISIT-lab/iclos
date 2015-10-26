@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent"		
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+		<f:event listener="#{navigator.goToVirtualMachine()}"
+			type="preRenderView" />
+		<h:panelGroup layout="block" styleClass="row">
+		<h:panelGroup layout="block" styleClass="col-lg-12">		
+		<h:form id="principalForm">
+			<h:panelGroup layout="block" class="panel panel-primary">
+				<h:panelGroup layout="block" class="panel-heading clearfix">
+					<h:panelGroup layout="block" class="row">
+						<h:panelGroup layout="block" class="btn-group">
+							<h:commandLink
+								action="#{virtualMachineViewer.addPanelGroupVirtualMachine()}"
+								value="Add VirtualMachine"
+								class="btn btn-primary btn-lg dropdown-toggle" />
+							<h:commandLink id="nextTopButtonActive"
+								action="#{virtualMachineController.createVirtualMachineOnDataCenter()}"
+								styleClass="btn btn-primary btn-lg"
+								rendered="#{virtualMachineViewer.buttonNext}"
+								value="Next">
+								<f:param name="cid" value="#{navigator.conversation.id}" />
+							</h:commandLink>
+							<h:link id="nextTopButtonDisabled"
+								disabled="#{not virtualMachineViewer.buttonNext}"
+								styleClass="btn btn-primary btn-lg disabled"
+								rendered="#{not virtualMachineViewer.buttonNext}"
+								value="Next">
+							</h:link>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="panel-body">
+					<h:panelGroup layout="block"
+						rendered="#{!virtualMachineViewer.buttonNext}">
+						<h:panelGroup layout="block"
+							class="alert alert-warning alert-dismissable">
+							To <strong>activate </strong> the <strong>next</strong> button you must: <br />
+								#{virtualMachineViewer.entityToAddMessage}
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block"
+						rendered="#{virtualMachineViewer.buttonNext}">
+						<h:panelGrid columns="2" style="margin-bottom: 10px">
+						<h:panelGroup layout="block" >													
+							<h:form id="ratioForm">
+								<h4 style="margin-top: 0">Add new VM's resource scaling factor</h4>
+							    <h:panelGrid columns="2" style="margin-bottom: 10px">	
+							    	<h:outputLabel value="Scaling factor:" for="txt1" />						    	
+							        <p:inputText id="txt1" style="width:100px" value="#{virtualMachineController.currentScale}" />
+							        <h:outputLabel value="Ratio of total VM:" for="txt2" />
+							        <p:inputText id="txt2" style="width:100px" value="#{virtualMachineController.currentRatio}" />
+									
+									<h:commandButton id="nextTopButtonActive"
+									action="#{virtualMachineController.addVmScaleFactor()}"
+									styleClass="btn btn-default btn-lg"
+									rendered="#{virtualMachineViewer.buttonNext}"
+									value="Add scaling factor">
+<!-- 									<f:param name="cid" value="#{navigator.conversation.id}" /> -->
+									</h:commandButton>
+							    </h:panelGrid>
+								
+							</h:form>	
+						</h:panelGroup>
+						<h:panelGroup layout="block">	
+						<h5>Added scaling factor:</h5>						
+							<ul>							
+							<c:forEach items="#{virtualMachineController.vmScaleFactor}" var="item">
+							<li><h:outputText value="Scale: #{item.scale} - Ratio: #{item.ratio}" /></li>
+							</c:forEach>
+							</ul>
+						</h:panelGroup>
+						</h:panelGrid>
+					</h:panelGroup>
+					<br></br>
+					<h:panelGroup layout="block" id="panelBodyVirtualMachinePrincipal"
+						binding="#{virtualMachineViewer.panelBodyVirtualMachinePrincipal}">
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+		</h:panelGroup>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

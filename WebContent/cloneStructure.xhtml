@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+		<f:event listener="#{navigator.beginConversation()}"
+			type="preRenderView" />
+		<f:event listener="#{navigator.goToCloneStructure()}"
+			type="preRenderView" />
+
+		<h:panelGroup styleClass="container-fluid"
+			rendered="#{analyzeWorkLoadController.ipInserted and empty analyzeWorkLoadController.dataCenterChoice}">
+			<h:panelGroup styleClass="row">
+				<ui:repeat value="#{analyzeWorkLoadController.uriDataCenterList}"
+					var="uriDataCenter">
+					<h:form>
+						<h:commandLink
+							action="#{analyzeWorkLoadController.setDataCenterChoice(uriDataCenter)}"
+							styleClass="col-md-4 col-lg-3 col-sm-6 col-xs-12 btn btn-lg btn-default"
+							value="#{uriDataCenter}">
+						</h:commandLink>
+					</h:form>
+				</ui:repeat>
+			</h:panelGroup>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block"
+			styleClass="col-md-8 col-lg-8 col-sm-6 col-xs-6"
+			rendered="#{analyzeWorkLoadController.ipInserted and not empty analyzeWorkLoadController.dataCenterChoice}">
+			<c:forEach
+				items="#{analyzeWorkLoadController.dataCenter.hostMachineList}"
+				var="hostMachine">
+				<h:panelGroup layout="block" styleClass="panel panel-default">
+					<h:panelGroup layout="block" styleClass="panel-heading">
+						<h:selectBooleanCheckbox value="false" />#{hostMachine.hasName}</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="panel-body">
+						<h:panelGroup styleClass="container-fluid">
+							<h:panelGroup styleClass="row">
+							</h:panelGroup>
+							<c:forEach items="#{hostMachine.virtualMachineList}"
+								var="virtualMachine" varStatus="virtualMachineStatus">
+								<h:panelGroup layout="block"
+									styleClass="col-md-4 col-lg-3 col-sm-6 col-xs-12 btn btn-lg btn-default">
+									<h:selectBooleanCheckbox value="false" />#{virtualMachine.hasName}</h:panelGroup>
+							</c:forEach>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</c:forEach>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block"
+			styleClass="col-md-4 col-lg-4 col-sm-6 col-xs-6"
+			rendered="#{analyzeWorkLoadController.ipInserted and not empty analyzeWorkLoadController.dataCenterChoice}">
+			<h:panelGroup layout="block" styleClass="panel panel-default">
+				<h:panelGroup layout="block" styleClass="panel-heading">Business Configuration</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-body">
+					<h:panelGroup styleClass="container-fluid">
+						<h:panelGroup styleClass="row">
+						</h:panelGroup>
+						<c:forEach
+							items="#{analyzeWorkLoadController.mapVirtualMachineToBusinessConfiguration.keySet()}"
+							var="businessConfiguration">
+							<h:panelGroup layout="block"
+								styleClass="col-md-12 col-lg-12 col-sm-12 col-xs-12 btn btn-lg btn-default">
+								<h:selectBooleanCheckbox value="false" />#{businessConfiguration.hasName}</h:panelGroup>
+						</c:forEach>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
+
+	</ui:define>
+</ui:composition>
+</html>

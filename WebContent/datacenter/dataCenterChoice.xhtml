@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+		<f:event listener="#{navigator.beginConversation()}"
+			type="preRenderView" />
+		<f:event listener="#{navigator.goToDataCenterChoice()}"
+			type="preRenderView" />
+		<h:panelGroup layout="block" class="panel panel-primary"
+			rendered="#{not empty dataCenterController.dataCenterChoice}">
+			<h:panelGroup layout="block" class="panel-heading clearfix">
+				<h:panelGroup layout="block" class="row">
+					<h:panelGroup layout="block" class="col-md-12">
+						<h3>
+							<u><strong>DataCenter:</strong></u>
+							#{dataCenterController.dataCenter.localUri}
+						</h3>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="panel-body">
+				<c:forEach
+					items="#{dataCenterController.dataCenter.hostMachineList}"
+					var="hostMachine">
+					<h:panelGroup layout="block" class="panel panel-info">
+						<h:panelGroup layout="block" class="panel-heading clearfix">
+							<h4>
+								<u><strong>HostMachine:</strong></u> #{hostMachine.localUri} <strong>CPU:</strong>
+								#{hostMachine.hasCPUCount} <strong>Memory(GB):</strong>
+								#{hostMachine.hasMemorySize} <strong>TotalStorage(GB):</strong>
+								#{hostMachine.storage}
+							</h4>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="panel-body">
+							<c:forEach items="#{hostMachine.virtualMachineList}"
+								var="virtualMachine">
+								<h:panelGroup layout="block" class="panel panel-success">
+									<h:panelGroup layout="block" class="panel-heading clearfix">
+										<h5>
+											<u><strong>VirtualMachine:</strong></u> #{virtualMachine.localUri}
+											<strong>CPU:</strong> #{virtualMachine.hasCPUCount} <strong>Memory(GB):</strong>
+											#{virtualMachine.hasMemorySize} <strong>TotalStorage(GB):</strong>
+											#{virtualMachine.storage}
+										</h5>
+									</h:panelGroup>
+									<h:panelGroup layout="block" class="panel-body">
+										<c:forEach items="#{virtualMachine.icaroServiceList}"
+											var="icaroService">
+											<h:panelGroup layout="block" class="panel panel-warning">
+												<h:panelGroup layout="block" class="panel-heading clearfix">
+													<h5>
+														<u><strong>IcaroService:</strong></u> #{icaroService.uri}
+													</h5>
+												</h:panelGroup>
+											</h:panelGroup>
+										</c:forEach>
+									</h:panelGroup>
+								</h:panelGroup>
+							</c:forEach>
+						</h:panelGroup>
+					</h:panelGroup>
+				</c:forEach>
+			</h:panelGroup>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

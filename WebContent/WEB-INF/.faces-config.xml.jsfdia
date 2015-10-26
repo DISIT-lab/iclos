@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#home.xhtml" PATH="/home.xhtml"
+  SHAPE="48,464,50,57" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#businessConfiguration.xhtml"
+  PATH="/businessConfiguration.xhtml" SHAPE="296,296,50,41" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#businessConfiguration.xhtml:0" NAME="item"
+   PATH="/businessConfiguration.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#virtualMachine.xhtml" NAME="output"
+    PATH="/virtualMachine.xhtml" TARGET="rules:#virtualMachine.xhtml"
+    TITLE="back" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="visualizeXMLBusinessConfiguration::#visualizexml#visualizeXMLBusinessConfiguration.xhtml"
+    NAME="output1"
+    PATH="/visualizexml/visualizeXMLBusinessConfiguration.xhtml"
+    TARGET="rules:#visualizexml#visualizeXMLBusinessConfiguration.xhtml"
+    TITLE="visualizeXMLBusinessConfiguration" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="visualizeXMLBusinessConfiguration::#error#errorBusinessConfiguration.xhtml"
+    NAME="output2" PATH="/error/errorBusinessConfiguration.xhtml"
+    TARGET="rules:#error#errorBusinessConfiguration.xhtml"
+    TITLE="visualizeXMLBusinessConfiguration" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="48,817,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="analyzeMetrics::#analyzeMetrics.xhtml"
+    NAME="output" PATH="/analyzeMetrics.xhtml"
+    TARGET="rules:#analyzeMetrics.xhtml" TITLE="analyzeMetrics" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cloneStructure::#cloneStructure.xhtml"
+    NAME="output1" PATH="/cloneStructure.xhtml"
+    TARGET="rules:#cloneStructure.xhtml" TITLE="cloneStructure" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="collectData::#collectData.xhtml"
+    NAME="output2" PATH="/collectData.xhtml"
+    TARGET="rules:#collectData.xhtml" TITLE="collectData" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="configuration::#configuration.xhtml"
+    NAME="output3" PATH="/configuration.xhtml"
+    TARGET="rules:#configuration.xhtml" TITLE="configuration" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="virtualMachine::#virtualMachine.xhtml"
+    NAME="output4" PATH="/virtualMachine.xhtml"
+    TARGET="rules:#virtualMachine.xhtml" TITLE="virtualMachine" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterChoice::#datacenter#dataCenterChoice.xhtml"
+    NAME="output5" PATH="/datacenter/dataCenterChoice.xhtml"
+    TARGET="rules:#datacenter#dataCenterChoice.xhtml"
+    TITLE="dataCenterChoice" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="dataCenter::#datacenter#dataCenter.xhtml"
+    NAME="output6" PATH="/datacenter/dataCenter.xhtml"
+    TARGET="rules:#datacenter#dataCenter.xhtml" TITLE="dataCenter" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="businessConfiguration::#businessConfiguration.xhtml"
+    NAME="output7" PATH="/businessConfiguration.xhtml"
+    TARGET="rules:#businessConfiguration.xhtml"
+    TITLE="businessConfiguration" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterSimulationRealTime::#datacenter#dataCenterSimulationRealTime.xhtml"
+    NAME="output8" PATH="/datacenter/dataCenterSimulationRealTime.xhtml"
+    TARGET="rules:#datacenter#dataCenterSimulationRealTime.xhtml"
+    TITLE="dataCenterSimulationRealTime" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterSimulationFaster::#datacenter#dataCenterSimulationFaster.xhtml"
+    NAME="output9" PATH="/datacenter/dataCenterSimulationFaster.xhtml"
+    TARGET="rules:#datacenter#dataCenterSimulationFaster.xhtml"
+    TITLE="dataCenterSimulationFaster" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterVirtualMachinePlacement::#datacenter#dataCenterVirtualMachinePlacement.xhtml"
+    NAME="output10"
+    PATH="/datacenter/dataCenterVirtualMachinePlacement.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacement.xhtml"
+    TITLE="dataCenterVirtualMachinePlacement" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterVirtualMachinePlacementChoice::#datacenter#dataCenterVirtualMachinePlacementChoice.xhtml"
+    NAME="output11"
+    PATH="/datacenter/dataCenterVirtualMachinePlacementChoice.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacementChoice.xhtml"
+    TITLE="dataCenterVirtualMachinePlacementChoice" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterVirtualMachinePlacementAnalyzeResult::#datacenter#dataCenterVirtualMachinePlacementAnalyzeResult.xhtml"
+    NAME="output12"
+    PATH="/datacenter/dataCenterVirtualMachinePlacementAnalyzeResult.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacementAnalyzeResult.xhtml"
+    TITLE="dataCenterVirtualMachinePlacementAnalyzeResult" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="vmPlacementTestRunner::#datacenter#vmPlacementTestRunner.xhtml"
+    NAME="output13" PATH="/datacenter/vmPlacementTestRunner.xhtml"
+    TARGET="rules:#datacenter#vmPlacementTestRunner.xhtml"
+    TITLE="vmPlacementTestRunner" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="PlacementTestViwer::#datacenter#PlacementTestViewer.xhtml"
+    NAME="output14" PATH="/datacenter/PlacementTestViewer.xhtml"
+    TARGET="rules:#datacenter#PlacementTestViewer.xhtml"
+    TITLE="PlacementTestViwer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterVirtualMachinePlacementDetail::#datacenter#dataCenterVirtualMachinePlacementDetail.xhtml"
+    NAME="output15"
+    PATH="/datacenter/dataCenterVirtualMachinePlacementDetail.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacementDetail.xhtml"
+    TITLE="dataCenterVirtualMachinePlacementDetail" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterVirtualMachinePlacementIterationDetail::#datacenter#dataCenterVirtualMachinePlacementIterationDetail.xhtml"
+    NAME="output16"
+    PATH="/datacenter/dataCenterVirtualMachinePlacementIterationDetail.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacementIterationDetail.xhtml"
+    TITLE="dataCenterVirtualMachinePlacementIterationDetail" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterVirtualMachinePlacementHostDetail::#datacenter#dataCenterVirtualMachinePlacementHostDetail.xhtml"
+    NAME="output17"
+    PATH="/datacenter/dataCenterVirtualMachinePlacementHostDetail.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacementHostDetail.xhtml"
+    TITLE="dataCenterVirtualMachinePlacementHostDetail" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterVirtualMachinePlacementVmDetail::#datacenter#dataCenterVirtualMachinePlacementVmDetail.xhtml"
+    NAME="output18"
+    PATH="/datacenter/dataCenterVirtualMachinePlacementVmDetail.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacementVmDetail.xhtml"
+    TITLE="dataCenterVirtualMachinePlacementVmDetail" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterSimulationChoice::#datacenter#dataCenterSimulationChoice.xhtml"
+    NAME="output19" PATH="/datacenter/dataCenterSimulationChoice.xhtml"
+    TARGET="rules:#datacenter#dataCenterSimulationChoice.xhtml"
+    TITLE="dataCenterSimulationChoice" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterVirtualMachinePlacementAssignedTestCasePattern::#datacenter#dataCenterVirtualMachinePlacementAssignedTestCasePattern.xhtml"
+    NAME="output20"
+    PATH="/datacenter/dataCenterVirtualMachinePlacementAssignedTestCasePattern.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacementAssignedTestCasePattern.xhtml"
+    TITLE="dataCenterVirtualMachinePlacementAssignedTestCasePattern" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="dataCenterVirtualMachinePlacementTestCaseViewer::#datacenter#dataCenterVirtualMachinePlacementTestCaseViewer.xhtml"
+    NAME="output21"
+    PATH="/datacenter/dataCenterVirtualMachinePlacementTestCaseViewer.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacementTestCaseViewer.xhtml"
+    TITLE="dataCenterVirtualMachinePlacementTestCaseViewer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="serviceMetric::#serviceMetric.xhtml"
+    NAME="output22" PATH="/serviceMetric.xhtml"
+    TARGET="rules:#serviceMetric.xhtml" TITLE="serviceMetric" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="home::#home.xhtml" NAME="output23"
+    PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="home" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#virtualMachine.xhtml"
+  PATH="/virtualMachine.xhtml" SHAPE="96,705,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#virtualMachine.xhtml:0" NAME="item"
+   PATH="/virtualMachine.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#datacenter#dataCenterChoice.xhtml"
+    NAME="output" PATH="/datacenter/dataCenterChoice.xhtml"
+    TARGET="rules:#datacenter#dataCenterChoice.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#analyzeMetrics.xhtml"
+  PATH="/analyzeMetrics.xhtml" SHAPE="608,993,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#analyzeMetrics.xhtml:0" NAME="item"
+   PATH="/analyzeMetrics.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#datacenter#dataCenterChoice.xhtml"
+    NAME="output" PATH="/datacenter/dataCenterChoice.xhtml"
+    TARGET="rules:#datacenter#dataCenterChoice.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#datacenter#dataCenterChoice.xhtml"
+  PATH="/datacenter/dataCenterChoice.xhtml" SHAPE="608,1329,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#datacenter#dataCenterChoice.xhtml:0"
+   NAME="item" PATH="/datacenter/dataCenterChoice.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#home.xhtml" NAME="output"
+    PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#datacenter#dataCenterSimulationChoice.xhtml"
+  PATH="/datacenter/dataCenterSimulationChoice.xhtml"
+  SHAPE="608,1553,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#datacenter#dataCenterSimulationChoice.xhtml:0" NAME="item"
+   PATH="/datacenter/dataCenterSimulationChoice.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#home.xhtml" NAME="output"
+    PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#datacenter#dataCenterSimulationFaster.xhtml"
+  PATH="/datacenter/dataCenterSimulationFaster.xhtml"
+  SHAPE="608,705,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#datacenter#dataCenterSimulationFaster.xhtml:0" NAME="item"
+   PATH="/datacenter/dataCenterSimulationFaster.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#datacenter#dataCenterChoice.xhtml"
+    NAME="output" PATH="/datacenter/dataCenterChoice.xhtml"
+    TARGET="rules:#datacenter#dataCenterChoice.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#datacenter#dataCenterSimulationRealTime.xhtml"
+  PATH="/datacenter/dataCenterSimulationRealTime.xhtml"
+  SHAPE="608,1441,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#datacenter#dataCenterSimulationRealTime.xhtml:0"
+   NAME="item" PATH="/datacenter/dataCenterSimulationRealTime.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#datacenter#dataCenterChoice.xhtml"
+    NAME="output" PATH="/datacenter/dataCenterChoice.xhtml"
+    TARGET="rules:#datacenter#dataCenterChoice.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#datacenter#dataCenter.xhtml"
+  PATH="/datacenter/dataCenter.xhtml" SHAPE="608,817,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#datacenter#dataCenter.xhtml:0" NAME="item"
+   PATH="/datacenter/dataCenter.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#home.xhtml" NAME="output"
+    PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="visualizeXMLDataCenter::#visualizexml#visualizeXMLDataCenter.xhtml"
+    NAME="output1" PATH="/visualizexml/visualizeXMLDataCenter.xhtml"
+    TARGET="rules:#visualizexml#visualizeXMLDataCenter.xhtml"
+    TITLE="visualizeXMLDataCenter" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="visualizeXMLDataCenter::#error#errorDataCenter.xhtml"
+    NAME="output2" PATH="/error/errorDataCenter.xhtml"
+    TARGET="rules:#error#errorDataCenter.xhtml"
+    TITLE="visualizeXMLDataCenter" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#visualizexml#visualizeXMLDataCenter.xhtml"
+  PATH="/visualizexml/visualizeXMLDataCenter.xhtml" SHAPE="368,833,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#visualizexml#visualizeXMLDataCenter.xhtml:0"
+   NAME="item" PATH="/visualizexml/visualizeXMLDataCenter.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#datacenter#dataCenter.xhtml"
+    NAME="output" PATH="/datacenter/dataCenter.xhtml"
+    TARGET="rules:#datacenter#dataCenter.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#error#errorDataCenter.xhtml"
+  PATH="/error/errorDataCenter.xhtml" SHAPE="368,1009,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#error#errorDataCenter.xhtml:0" NAME="item"
+   PATH="/error/errorDataCenter.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#datacenter#dataCenter.xhtml"
+    NAME="output" PATH="/datacenter/dataCenter.xhtml"
+    TARGET="rules:#datacenter#dataCenter.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#visualizexml#visualizeXMLBusinessConfiguration.xhtml"
+  PATH="/visualizexml/visualizeXMLBusinessConfiguration.xhtml"
+  SHAPE="368,433,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#visualizexml#visualizeXMLBusinessConfiguration.xhtml:0"
+   NAME="item"
+   PATH="/visualizexml/visualizeXMLBusinessConfiguration.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#businessConfiguration.xhtml"
+    NAME="output" PATH="/businessConfiguration.xhtml"
+    TARGET="rules:#businessConfiguration.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#error#errorBusinessConfiguration.xhtml"
+  PATH="/error/errorBusinessConfiguration.xhtml" SHAPE="368,145,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#error#errorBusinessConfiguration.xhtml:0"
+   NAME="item" PATH="/error/errorBusinessConfiguration.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#businessConfiguration.xhtml"
+    NAME="output" PATH="/businessConfiguration.xhtml"
+    TARGET="rules:#businessConfiguration.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#serviceMetric.xhtml"
+  PATH="/serviceMetric.xhtml" SHAPE="608,529,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#serviceMetric.xhtml:0" NAME="item"
+   PATH="/serviceMetric.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#home.xhtml" NAME="output"
+    PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="visualizeXMLServiceMetric::#visualizexml#visualizeXMLServiceMetric.xhtml"
+    NAME="output1" PATH="/visualizexml/visualizeXMLServiceMetric.xhtml"
+    TARGET="rules:#visualizexml#visualizeXMLServiceMetric.xhtml"
+    TITLE="visualizeXMLServiceMetric" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="visualizeXMLServiceMetric::#error#errorServiceMetric.xhtml"
+    NAME="output2" PATH="/error/errorServiceMetric.xhtml"
+    TARGET="rules:#error#errorServiceMetric.xhtml"
+    TITLE="visualizeXMLServiceMetric" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#visualizexml#visualizeXMLServiceMetric.xhtml"
+  PATH="/visualizexml/visualizeXMLServiceMetric.xhtml"
+  SHAPE="368,545,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#visualizexml#visualizeXMLServiceMetric.xhtml:0"
+   NAME="item" PATH="/visualizexml/visualizeXMLServiceMetric.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#serviceMetric.xhtml" NAME="output"
+    PATH="/serviceMetric.xhtml" TARGET="rules:#serviceMetric.xhtml"
+    TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#error#errorServiceMetric.xhtml"
+  PATH="/error/errorServiceMetric.xhtml" SHAPE="848,545,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#collectData.xhtml" PATH="/collectData.xhtml"
+  SHAPE="96,705,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#collectData.xhtml:0" NAME="item"
+   PATH="/collectData.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#home.xhtml" NAME="output"
+    PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#configuration.xhtml"
+  PATH="/configuration.xhtml" SHAPE="368,1313,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#configuration.xhtml:0" NAME="item"
+   PATH="/configuration.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#home.xhtml" NAME="output"
+    PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#cloneStructure.xhtml"
+  PATH="/cloneStructure.xhtml" SHAPE="96,705,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#cloneStructure.xhtml:0" NAME="item"
+   PATH="/cloneStructure.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#home.xhtml" NAME="output"
+    PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#datacenter#dataCenterVirtualMachinePlacement.xhtml"
+  PATH="/datacenter/dataCenterVirtualMachinePlacement.xhtml"
+  SHAPE="368,1793,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#datacenter#dataCenterVirtualMachinePlacement.xhtml:0"
+   NAME="item"
+   PATH="/datacenter/dataCenterVirtualMachinePlacement.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="back::#datacenter#dataCenterChoice.xhtml"
+    NAME="output" PATH="/datacenter/dataCenterChoice.xhtml"
+    TARGET="rules:#datacenter#dataCenterChoice.xhtml" TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#datacenter#dataCenterVirtualMachinePlacementDetail.xhtml"
+  PATH="/datacenter/dataCenterVirtualMachinePlacementDetail.xhtml"
+  SHAPE="96,2257,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#datacenter#dataCenterVirtualMachinePlacementDetail.xhtml:0"
+   NAME="item"
+   PATH="/datacenter/dataCenterVirtualMachinePlacementDetail.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="back::#datacenter#dataCenterVirtualMachinePlacement.xhtml"
+    NAME="output"
+    PATH="/datacenter/dataCenterVirtualMachinePlacement.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacement.xhtml"
+    TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#datacenter#dataCenterVirtualMachinePlacementAnalyzeResult.xhtml"
+  PATH="/datacenter/dataCenterVirtualMachinePlacementAnalyzeResult.xhtml"
+  SHAPE="96,2289,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#datacenter#dataCenterVirtualMachinePlacementAnalyzeResult.xhtml:0"
+   NAME="item"
+   PATH="/datacenter/dataCenterVirtualMachinePlacementAnalyzeResult.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="back::#datacenter#dataCenterVirtualMachinePlacementChoice.xhtml"
+    NAME="output"
+    PATH="/datacenter/dataCenterVirtualMachinePlacementChoice.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacementChoice.xhtml"
+    TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#datacenter#dataCenterVirtualMachinePlacementChoice.xhtml"
+  PATH="/datacenter/dataCenterVirtualMachinePlacementChoice.xhtml"
+  SHAPE="240,2865,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#datacenter#vmPlacementTestRunner.xhtml"
+  PATH="/datacenter/vmPlacementTestRunner.xhtml" SHAPE="368,1921,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#datacenter#vmPlacementTestRunner.xhtml:0"
+   NAME="item" PATH="/datacenter/vmPlacementTestRunner.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="back::#datacenter#dataCenterVirtualMachinePlacementChoice.xhtml"
+    NAME="output"
+    PATH="/datacenter/dataCenterVirtualMachinePlacementChoice.xhtml"
+    TARGET="rules:#datacenter#dataCenterVirtualMachinePlacementChoice.xhtml"
+    TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#datacenter#dataCenterVirtualMachinePlacementIterationDetail.xhtml"
+  PATH="/datacenter/dataCenterVirtualMachinePlacementIterationDetail.xhtml"
+  SHAPE="368,1569,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#datacenter#dataCenterVirtualMachinePlacementHostDetail.xhtml"
+  PATH="/datacenter/dataCenterVirtualMachinePlacementHostDetail.xhtml"
+  SHAPE="368,1601,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#datacenter#dataCenterVirtualMachinePlacementVmDetail.xhtml"
+  PATH="/datacenter/dataCenterVirtualMachinePlacementVmDetail.xhtml"
+  SHAPE="368,1633,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#datacenter#PlacementTestViwer.xhtml"
+  PATH="/datacenter/PlacementTestViwer.xhtml" SHAPE="96,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#datacenter#PlacementTestViwer.xhtml:0"
+   NAME="item" PATH="/datacenter/PlacementTestViwer.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="back::#dataCenter#VirtualMachinePlacementChoice.xhtml"
+    NAME="output" PATH="/dataCenter/VirtualMachinePlacementChoice.xhtml"
+    TARGET="rules:#dataCenter#VirtualMachinePlacementChoice.xhtml"
+    TITLE="back" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#dataCenter#VirtualMachinePlacementChoice.xhtml"
+  PATH="/dataCenter/VirtualMachinePlacementChoice.xhtml"
+  SHAPE="368,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#datacenter#dataCenterVirtualMachinePlacementAssignedTestCasePattern.xhtml"
+  PATH="/datacenter/dataCenterVirtualMachinePlacementAssignedTestCasePattern.xhtml"
+  SHAPE="368,1697,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#datacenter#dataCenterVirtualMachinePlacementTestCaseViewer.xhtml"
+  PATH="/datacenter/dataCenterVirtualMachinePlacementTestCaseViewer.xhtml"
+  SHAPE="368,1793,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#datacenter#PlacementTestViewer.xhtml"
+  PATH="/datacenter/PlacementTestViewer.xhtml" SHAPE="368,1793,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

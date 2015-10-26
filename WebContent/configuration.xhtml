@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+		<f:event listener="#{navigator.goToConfiguration()}"
+			type="preRenderView" />
+		<f:event listener="#{navigator.beginConversation()}"
+			type="preRenderView" />
+		<h:panelGroup layout="block" styleClass="col-lg-offset-2 col-lg-8"
+			rendered="#{configurationController.changeIPConfiguration}">
+
+
+			<h:panelGroup layout="block" styleClass="panel panel-info">
+				<h:panelGroup layout="block" styleClass="panel-heading">ChangeIPConfiguration</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-body">
+					<h:form>
+						<ui:repeat value="#{configurationController.keyList}" var="key"
+							varStatus="keyStatus">
+							<ic:inputTextBS preAddon="#{key}" placeholder="InsertValue"
+								value="#{configurationController.configurationPropertiesMap[key]}"
+								rendered="#{not key.contains('addressIP')}">
+							</ic:inputTextBS>
+							<ic:inputIPBS preAddon="#{key}" placeholder="InsertValue"
+								value="#{configurationController.configurationPropertiesMap[key]}"
+								validatorId="URLValidator"
+								rendered="#{key.contains('addressIP')}">
+							</ic:inputIPBS>
+						</ui:repeat>
+						<hr />
+						<h:commandLink id="saveConfigurationPropertiesToFile"
+							action="#{configurationController.saveConfigurationPropertiesToFile()}"
+							styleClass="btn btn-primary col-md-offset-4 col-lg-offset-4 col-sm-offset-4 col-xs-offset-4 col-md-2 col-lg-2 col-sm-2 col-xs-2"
+							value="Save">
+						</h:commandLink>
+						<h:commandLink id="hideChangeIPConfigurationForm"
+							action="#{configurationController.hideChangeIPConfigurationForm()}"
+							styleClass="btn btn-default col-md-2 col-lg-2 col-sm-2 col-xs-2"
+							value="Cancel" immediate="true">
+						</h:commandLink>
+					</h:form>
+				</h:panelGroup>
+			</h:panelGroup>
+
+
+
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" styleClass="col-lg-12"
+			rendered="#{configurationController.changeIPConfiguration}">
+			<hr />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="row">
+			<h:form>
+				<h:commandLink id="ChangeIPConfiguration"
+					styleClass="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-3 col-lg-3 col-sm-5 col-xs-10 btn btn-lg btn-default"
+					action="#{configurationController.showChangeIPConfigurationForm()}"
+					value="Change
+				IP Configuration">
+				</h:commandLink>
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

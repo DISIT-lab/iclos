@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+	<navigation-rule>
+		<from-view-id>/virtualMachine.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/datacenter/dataCenterChoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/analyzeMetrics.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/datacenter/dataCenterChoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/cloneStructure.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/collectData.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/configuration.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/datacenter/dataCenterChoice.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/datacenter/dataCenterSimulationChoice.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/datacenter/dataCenterSimulationFaster.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/datacenter/dataCenterChoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/datacenter/dataCenterVirtualMachinePlacement.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/datacenter/dataCenterChoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/datacenter/vmPlacementTestRunner.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacementChoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/datacenter/dataCenterVirtualMachinePlacementDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/datacenter/dataCenterVirtualMachinePlacementAnalyzeResult.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacementChoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/datacenter/dataCenterSimulationRealTime.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/datacenter/dataCenterChoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>/datacenter/dataCenter.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>visualizeXMLDataCenter</from-outcome>
+			<if>#{dataCenterController.okXmlRdf}</if>
+			<to-view-id>/visualizexml/visualizeXMLDataCenter.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>visualizeXMLDataCenter</from-outcome>
+			<if>#{not dataCenterController.okXmlRdf}</if>
+			<to-view-id>/error/errorDataCenter.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/visualizexml/visualizeXMLDataCenter.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/datacenter/dataCenter.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/error/errorDataCenter.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/datacenter/dataCenter.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/businessConfiguration.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/virtualMachine.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>visualizeXMLBusinessConfiguration</from-outcome>
+			<if>#{businessConfigurationController.okXmlRdf}</if>
+			<to-view-id>/visualizexml/visualizeXMLBusinessConfiguration.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>visualizeXMLBusinessConfiguration</from-outcome>
+			<if>#{not businessConfigurationController.okXmlRdf}</if>
+			<to-view-id>/error/errorBusinessConfiguration.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/visualizexml/visualizeXMLBusinessConfiguration.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/businessConfiguration.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/error/errorBusinessConfiguration.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/businessConfiguration.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/datacenter/PlacementTestViwer.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/dataCenter/VirtualMachinePlacementChoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/serviceMetric.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>visualizeXMLServiceMetric</from-outcome>
+			<if>#{serviceMetricController.okXmlRdf}</if>
+			<to-view-id>/visualizexml/visualizeXMLServiceMetric.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>visualizeXMLServiceMetric</from-outcome>
+			<if>#{not serviceMetricController.okXmlRdf}</if>
+			<to-view-id>/error/errorServiceMetric.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/visualizexml/visualizeXMLServiceMetric.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/serviceMetric.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>analyzeMetrics</from-outcome>
+			<to-view-id>/analyzeMetrics.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cloneStructure</from-outcome>
+			<to-view-id>/cloneStructure.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>collectData</from-outcome>
+			<to-view-id>/collectData.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>configuration</from-outcome>
+			<to-view-id>/configuration.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>virtualMachine</from-outcome>
+			<to-view-id>/virtualMachine.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterChoice</from-outcome>
+			<to-view-id>/datacenter/dataCenterChoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenter</from-outcome>
+			<to-view-id>/datacenter/dataCenter.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>businessConfiguration</from-outcome>
+			<to-view-id>/businessConfiguration.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterSimulationRealTime</from-outcome>
+			<to-view-id>/datacenter/dataCenterSimulationRealTime.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterSimulationFaster</from-outcome>
+			<to-view-id>/datacenter/dataCenterSimulationFaster.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterVirtualMachinePlacement</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterVirtualMachinePlacementChoice</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacementChoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterVirtualMachinePlacementAnalyzeResult</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacementAnalyzeResult.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>vmPlacementTestRunner</from-outcome>
+			<to-view-id>/datacenter/vmPlacementTestRunner.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>PlacementTestViwer</from-outcome>
+			<to-view-id>/datacenter/PlacementTestViewer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterVirtualMachinePlacementDetail</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacementDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterVirtualMachinePlacementIterationDetail</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacementIterationDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterVirtualMachinePlacementHostDetail</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacementHostDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterVirtualMachinePlacementVmDetail</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacementVmDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterSimulationChoice</from-outcome>
+			<to-view-id>/datacenter/dataCenterSimulationChoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterVirtualMachinePlacementAssignedTestCasePattern</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacementAssignedTestCasePattern.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dataCenterVirtualMachinePlacementTestCaseViewer</from-outcome>
+			<to-view-id>/datacenter/dataCenterVirtualMachinePlacementTestCaseViewer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>serviceMetric</from-outcome>
+			<to-view-id>/serviceMetric.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<lifecycle>
+		<phase-listener>org.cloudsimulator.listener.PostRedirectGetListener</phase-listener>
+		<phase-listener>org.cloudsimulator.listener.ForceChooseDataCenterPhaseListener</phase-listener>
+	</lifecycle>
+</faces-config>

@@ -1,0 +1,370 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+				
+		<h:panelGroup layout="block" styleClass="col-lg-12" 
+		rendered="#{placementIDCtrl.machinePlacement != null}">				
+				
+					<h:panelGroup layout="block" styleClass="row ">
+											
+								<h:panelGroup layout="block" styleClass="col-lg-6">
+									<h:panelGroup layout="block" styleClass="row">
+									<h:commandButton styleClass="btn btn-sm btn-default" value="Reset zoom" onclick="PF('chart3').resetZoom()" />
+									<h:commandButton styleClass="btn btn-sm btn-default" value="Toggle legend" onclick="toggleLegend(PF('chart3'))" />
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="row">
+										<p:chart widgetVar="chart3" type="line" 
+										rendered="#{placementIDCtrl.machinePlacement.lineModelCpu != null and placementIDCtrl.showDataCenterOverallChart}" 
+										model="#{placementIDCtrl.machinePlacement.lineModelCpu}" style="height:300px;"/>
+										<p:chart widgetVar="chart3" type="line" 
+										rendered="#{placementIDCtrl.machinePlacement.lineModelCpuArea != null and not placementIDCtrl.showDataCenterOverallChart}" 
+										model="#{placementIDCtrl.machinePlacement.lineModelCpuArea}" style="height:300px;"/>
+									</h:panelGroup>										
+								</h:panelGroup>
+								
+								<h:panelGroup layout="block" styleClass="col-lg-6">
+									<h:panelGroup layout="block" styleClass="row">
+									<h:commandButton styleClass="btn btn-sm btn-default" value="Reset zoom" onclick="PF('chart4').resetZoom()" />
+									<h:commandButton styleClass="btn btn-sm btn-default" value="Toggle legend" onclick="toggleLegend(PF('chart4'))" />
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="row">
+									<p:chart widgetVar="chart4" type="line" stacked="true"
+									rendered="#{placementIDCtrl.machinePlacement.lineModelMemory != null and placementIDCtrl.showDataCenterOverallChart}" 
+									model="#{placementIDCtrl.machinePlacement.lineModelMemory}" style="height:300px;"/>
+									
+									<p:chart widgetVar="chart4" type="line" stacked="true"
+									rendered="#{placementIDCtrl.machinePlacement.lineModelMemoryArea != null and not placementIDCtrl.showDataCenterOverallChart}" 
+									model="#{placementIDCtrl.machinePlacement.lineModelMemoryArea}" style="height:300px;"/>
+									
+									</h:panelGroup>							
+								</h:panelGroup>									
+												    			
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" styleClass="row text-center" style="margin-top:15px">
+					<h:panelGroup layout="block" styleClass="col-lg-4" 
+						rendered="#{placementIDCtrl.machinePlacement != null}">
+						<h:panelGroup layout="block" class="panel panel-primary">
+						<h:panelGroup layout="block" class="panel-heading clearfix text-center">
+						<h4>Overall resources statistics</h4>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="panel-body" style="font-size:18px;font-decoration:italic">					
+							<h:panelGroup layout="block" styleClass="row">							
+							<p:panelGrid style="margin: 0 auto;width:90%">
+							
+							<p:row>
+							<p:column>
+							<h:outputText value="AVERAGE USAGE" styleClass="label label-primary" style="padding:15px" />							
+							</p:column>
+							<p:column>
+							<div class="progress" style="min-width:8em;margin-bottom:0px">
+							  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="min-width: 0%; width: #{placementIDCtrl.machinePlacement.overall_avg_usage * 100}%;">
+	   							<h:outputText value="#{placementIDCtrl.machinePlacement.overall_avg_usage}"  style="margin:10px;">
+								<f:convertNumber type="percent" />
+								</h:outputText>							
+							  </div>
+							</div>
+							</p:column>							
+							</p:row>	
+
+							<p:row>
+							<p:column>
+							<h:outputText value="IN RANGE TIME" styleClass="label label-primary" style="padding:15px" />							
+							</p:column>
+							<p:column>
+							<div class="progress" style="min-width:8em;margin-bottom:0px">
+							  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="min-width: 0%; width: #{placementIDCtrl.machinePlacement.overall_in_range * 100}%;">
+	   							<h:outputText value="#{placementIDCtrl.machinePlacement.overall_in_range}"  style="margin:10px;">
+								<f:convertNumber type="percent" />
+								</h:outputText>							
+							  </div>
+							</div>
+							</p:column>							
+							</p:row>	
+							
+							<p:row>
+							<p:column>
+							<h:outputText value="OVERPROV. TIME" styleClass="label label-primary" style="padding:15px" />							
+							</p:column>
+							<p:column>
+							<div class="progress" style="min-width:8em;margin-bottom:0px">
+							  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="min-width: 0%; width: #{(1 - placementIDCtrl.machinePlacement.overall_in_range ) *100}%;">
+	   							<h:outputText value="#{1 - placementIDCtrl.machinePlacement.overall_in_range}"  style="margin:10px;">
+								<f:convertNumber type="percent" />
+								</h:outputText>							
+							  </div>
+							</div>
+							</p:column>							
+							</p:row>	
+												
+							</p:panelGrid> 											
+							</h:panelGroup>
+						</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="col-lg-4" 
+						rendered="#{placementIDCtrl.machinePlacement != null}">
+						<h:panelGroup layout="block" class="panel panel-info">
+						<h:panelGroup layout="block" class="panel-heading clearfix text-center">
+						<h4>CPU resource statistics</h4>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="panel-body" style="font-decoration:italic">											
+							<h:panelGroup layout="block" styleClass="row" style="font-size:18px;">
+							<p:panelGrid style="margin: 0 auto;width:100%">							
+							<p:row>
+							<p:column>
+							<h:outputText style="font-size:13px;" id="cpuLimitDC" value="#{placementIDCtrl.machinePlacement.cpu_limit}" styleClass="label label-danger">
+							<f:convertNumber maxFractionDigits="0" pattern="##,##0.00 MHz"/>
+							</h:outputText>
+							<p:tooltip for="cpuLimitDC">CPU limit</p:tooltip>							
+							</p:column>							
+							<p:column>
+							<h:outputText  style="font-size:13px;" id="cpuAvailableDC" value="#{placementIDCtrl.machinePlacement.available_cpu}" styleClass="label label-success">
+							<f:convertNumber maxFractionDigits="0" pattern="##,##0.00 MHz"/>
+							</h:outputText>
+							<p:tooltip for="cpuAvailableDC">CPU available</p:tooltip>							
+							</p:column>
+							<p:column>
+							<h:outputText style="font-size:13px;" id="cpuOverRangeDC" value="#{placementIDCtrl.machinePlacement.cpu_limit - placementIDCtrl.machinePlacement.available_cpu}" styleClass="label label-warning">
+							<f:convertNumber maxFractionDigits="0" pattern="##,##0.00 MHz"/>
+							</h:outputText>							
+							<p:tooltip for="cpuOverRangeDC">Overprovisioning range</p:tooltip>		
+							</p:column>	
+							<p:column>
+							<h:outputText style="font-size:13px;" id="cpuMaxDC" value="#{placementIDCtrl.machinePlacement.cpu_max_usage}" styleClass="label label-primary">
+							<f:convertNumber maxFractionDigits="0" pattern="##,##0.00 MHz"/>
+							</h:outputText>							
+							<p:tooltip for="cpuMaxDC">Max CPU usage</p:tooltip>		
+							</p:column>
+							</p:row>	
+							<p:row>
+							
+							</p:row>
+							</p:panelGrid>							
+							<p:panelGrid style="margin: 0 auto;width:90%">
+							
+							<p:row>
+							<p:column>
+							<h:outputText value="AVERAGE USAGE" styleClass="label label-info" style="padding:15px" />							
+							</p:column>
+							<p:column>
+							<div class="progress" style="min-width:8em;margin-bottom:0px">
+							  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="min-width: 0%; width: #{placementIDCtrl.machinePlacement.cpu_avg_usage * 100}%;">
+	   							<h:outputText value="#{placementIDCtrl.machinePlacement.cpu_avg_usage}"  style="margin:10px;">
+								<f:convertNumber type="percent" />
+								</h:outputText>							
+							  </div>
+							</div>
+							</p:column>							
+							</p:row>	
+
+							<p:row>
+							<p:column>
+							<h:outputText value="IN RANGE TIME" styleClass="label label-info" style="padding:15px" />							
+							</p:column>
+							<p:column>
+							<div class="progress" style="min-width:8em;margin-bottom:0px">
+							  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="min-width: 0%; width: #{placementIDCtrl.machinePlacement.cpu_in_range * 100}%;">
+	   							<h:outputText value="#{placementIDCtrl.machinePlacement.cpu_in_range}"  style="margin:10px;">
+								<f:convertNumber type="percent" />
+								</h:outputText>							
+							  </div>
+							</div>
+							</p:column>							
+							</p:row>	
+							
+							<p:row>
+							<p:column>
+							<h:outputText value="OVERPROV. TIME" styleClass="label label-info" style="padding:15px" />							
+							</p:column>
+							<p:column>
+							<div class="progress" style="min-width:8em;margin-bottom:0px">
+							  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="min-width: 0%; width: #{(1 - placementIDCtrl.machinePlacement.cpu_in_range ) *100}%;">
+	   							<h:outputText value="#{1 - placementIDCtrl.machinePlacement.cpu_in_range}"  style="margin:10px;">
+								<f:convertNumber type="percent" />
+								</h:outputText>							
+							  </div>
+							</div>
+							</p:column>							
+							</p:row>	
+												
+							</p:panelGrid> 											
+							</h:panelGroup>
+						</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" styleClass="col-lg-4" 
+						rendered="#{placementIDCtrl.machinePlacement != null}">
+						<h:panelGroup layout="block" class="panel panel-info">
+						<h:panelGroup layout="block" class="panel-heading clearfix text-center">
+						<h4>Memory resource statistics</h4>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="panel-body" style="font-size:18px;font-decoration:italic">					
+							<h:panelGroup layout="block" styleClass="row">		
+							<p:panelGrid style="margin: 0 auto;width:100%">							
+							<p:row>
+							<p:column>
+							<h:outputText style="font-size:13px;" id="memoryLimitDC" value="#{placementIDCtrl.machinePlacement.memory_limit}" styleClass="label label-danger">
+							<f:convertNumber maxFractionDigits="2" pattern="##,##0.00 GB"/>
+							</h:outputText>
+							<p:tooltip for="memoryLimitDC">Memory limit</p:tooltip>							
+							</p:column>							
+							<p:column>
+							<h:outputText  style="font-size:13px;" id="memoryAvailableDC" value="#{placementIDCtrl.machinePlacement.available_memory}" styleClass="label label-success">
+							<f:convertNumber maxFractionDigits="2" pattern="##,##0.00 GB"/>
+							</h:outputText>
+							<p:tooltip for="memoryAvailableDC">Memory available</p:tooltip>							
+							</p:column>
+							<p:column>
+							<h:outputText style="font-size:13px;" id="memoryOverRangeDC" value="#{placementIDCtrl.machinePlacement.memory_limit - placementIDCtrl.machinePlacement.available_memory}" styleClass="label label-warning">
+							<f:convertNumber maxFractionDigits="2" pattern="##,##0.00 GB"/>
+							</h:outputText>							
+							<p:tooltip for="memoryOverRangeDC">Overprovisioning range</p:tooltip>		
+							</p:column>	
+							<p:column>
+							<h:outputText style="font-size:13px;" id="memoryMaxDC" value="#{placementIDCtrl.machinePlacement.memory_max_usage}" styleClass="label label-primary">
+							<f:convertNumber maxFractionDigits="2" pattern="##,##0.00 GB"/>
+							</h:outputText>							
+							<p:tooltip for="memoryMaxDC">Max Memory usage</p:tooltip>		
+							</p:column>
+							</p:row>	
+							<p:row>
+							
+							</p:row>
+							</p:panelGrid>					
+							<p:panelGrid style="margin: 0 auto;width:90%">
+							
+							<p:row>
+							<p:column>
+							<h:outputText value="AVERAGE USAGE" styleClass="label label-info" style="padding:15px" />							
+							</p:column>
+							<p:column>
+							<div class="progress" style="min-width:8em;margin-bottom:0px">
+							  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="min-width: 0%; width: #{placementIDCtrl.machinePlacement.memory_avg_usage * 100}%;">
+	   							<h:outputText value="#{placementIDCtrl.machinePlacement.memory_avg_usage}"  style="margin:10px;">
+								<f:convertNumber type="percent" />
+								</h:outputText>							
+							  </div>
+							</div>
+							</p:column>							
+							</p:row>	
+
+							<p:row>
+							<p:column>
+							<h:outputText value="IN RANGE TIME" styleClass="label label-info" style="padding:15px" />							
+							</p:column>
+							<p:column>
+							<div class="progress" style="min-width:8em;margin-bottom:0px">
+							  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="min-width: 0%; width: #{placementIDCtrl.machinePlacement.memory_in_range * 100}%;">
+	   							<h:outputText value="#{placementIDCtrl.machinePlacement.memory_in_range}"  style="margin:10px;">
+								<f:convertNumber type="percent" />
+								</h:outputText>							
+							  </div>
+							</div>
+							</p:column>							
+							</p:row>	
+							
+							<p:row>
+							<p:column>
+							<h:outputText value="OVERPROV. TIME" styleClass="label label-info" style="padding:15px" />							
+							</p:column>
+							<p:column>
+							<div class="progress" style="min-width:8em;margin-bottom:0px">
+							  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="min-width: 0%; width: #{(1 - placementIDCtrl.machinePlacement.memory_in_range ) *100}%;">
+	   							<h:outputText value="#{1 - placementIDCtrl.machinePlacement.memory_in_range}"  style="margin:10px;">
+								<f:convertNumber type="percent" />
+								</h:outputText>							
+							  </div>
+							</div>
+							</p:column>							
+							</p:row>	
+												
+							</p:panelGrid> 											
+							</h:panelGroup>
+						</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" styleClass="col-lg-12">
+					<table class="table table-striped text-center dataTableGrid" id="machineDetailsTable">
+					<thead>
+					<c:if test="#{not placementIDCtrl.showDataCenterOverallChart}">
+					<th class="text-center">Legend</th>	
+					</c:if>
+					<th class="text-center">Name</th>		
+					<th class="text-center">CPU</th>
+					<th class="text-center">MEMORY</th>			
+					<th class="text-center">Assigned VMs</th>
+					<th class="text-center">CPU avg</th>
+					<th class="text-center">CPU in range</th>
+					<th class="text-center">MEM avg</th>				
+					<th class="text-center">MEM in range</th>
+					<th class="text-center">OVERALL avg</th>
+					<th class="text-center">OVERALL in range</th>
+					<th class="text-center">Assigned vm roles</th>
+					<th class="text-center"></th>
+					</thead>	
+					<tbody>
+						<ui:repeat var="host" value="#{placementIDCtrl.machinePlacement.assignedMachines}">
+						<tr>
+							<c:if test="#{not placementIDCtrl.showDataCenterOverallChart}">					
+							<td> <div style="padding:10px;margin:5px;" /> </td>
+							</c:if>	
+							<td>#{host.machine.hasName}</td>														
+							<td><h:outputText value="#{host.machine.cpuThroughtput}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>MHz
+							</td>
+							<td><h:outputText value="#{host.machine.hasMemorySize}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>GB
+							</td>
+							<td>#{host.assignedMachines.size()}</td>
+							<td><h:outputText value="#{host.cpu_avg_usage * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>
+							<td><h:outputText value="#{host.cpu_in_range * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>
+							<td><h:outputText value="#{host.memory_avg_usage * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>
+							<td><h:outputText value="#{host.memory_in_range * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>
+							<td><h:outputText value="#{host.overall_avg_usage * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>
+							<td><h:outputText value="#{host.overall_in_range * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>	
+							<td>							
+							<h:outputText value="#{host.testRatioString}" escape="false" />													
+							</td>						
+							<td>
+								<h:form>
+									<h:commandLink value="View" target="_blank" 
+									action="#{placementIDCtrl.showHostDetail(host.assignedTo.assignedTo.id,host.machine.hasName)}">
+									</h:commandLink>
+								</h:form>					
+							</td>
+						</tr>
+						</ui:repeat>
+					</tbody>
+				</table>					
+			</h:panelGroup>
+		</h:panelGroup>					
+</ui:composition>

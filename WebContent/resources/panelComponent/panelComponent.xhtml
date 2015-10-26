@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent">
+
+<composite:interface>
+	<composite:attribute name="idPanel" required="true" />
+	<composite:attribute name="titlePanel" required="true" />
+	<composite:attribute name="typeBSPanel" default="default" />
+	<composite:attribute name="idPanelHeading" required="true" />
+	<composite:attribute name="idPanelBody" required="true" />
+	<composite:attribute name="listInputText"
+		shortDescription="Questo componente è un Panel con un numero variabile di InputText di tipo Text, Number e DropDo. Questa lista deve contenere degli oggetti con le seguenti proprietà: label, value e placeholder."></composite:attribute>
+	<composite:attribute name="listInputNumber" />
+	<composite:attribute name="listInputSelectOneMenu"
+		shortDescription="Rappresenta una lista di label e value da associare ad ogni lista dropdown." />
+	<composite:attribute name="objectBindToPanel" required="true" />
+</composite:interface>
+
+<composite:implementation>
+	<div class="panel-group" id="accordion">
+		<div id="#{cc.attrs.idPanel}"
+			class="panel panel-#{cc.attrs.typeBSPanel}">
+			<div id="#{cc.attrs.idPanelHeading}" class="panel-heading">
+				<button type="button" class="btn btn-#{cc.attrs.typeBSPanel}"
+					data-toggle="collapse"
+					data-target="#collapse#{cc.attrs.idPanelBody}" />
+				#{cc.attrs.titlePanel}
+				<!-- <h:commandLink action="#{cc.attrs.closePanelAction}" value="x" type="button" class="close" immediate="true"/> -->
+			</div>
+			<div id="collapse#{cc.attrs.idPanelBody}"
+				class="panel-collapse collapse in">
+				<div id="#{cc.attrs.idPanelBody}" class="panel-body">
+					<ui:repeat var="inputText" value="#{cc.attrs.listInputText}">
+						<ic:inputTextBS preAddon="#{inputText.label}" id="text"
+							required="true" requiredMessage="This field must not be empty"
+							placeholder="#{inputText.placeholder}"
+							value="#{cc.attrs.objectBindToPanel[inputText.value]}">
+						</ic:inputTextBS>
+					</ui:repeat>
+					<ui:repeat var="inputNumber" value="#{cc.attrs.listInputNumber}">
+						<ic:inputNumberBS preAddon="#{inputNumber.label}" id="number"
+							required="true" requiredMessage="This field must not be empty"
+							placeholder="#{inputNumber.placeholder}"
+							converterId="DigitsOnlyConverter"
+							value="#{cc.attrs.objectBindToPanel[inputNumber.value]}"
+							minimumValue="1" maximumValue="20000">
+						</ic:inputNumberBS>
+					</ui:repeat>
+					<ui:repeat var="inputSelectOneMenu"
+						value="#{cc.attrs.listInputSelectOneMenu}">
+						<ic:inputSelectOneMenuBS preAddon="#{inputSelectOneMenu.label}"
+							value="#{inputSelectOneMenu.value}"
+							listInputSelectOneMenu="#{inputSelectOneMenu.listSelectOneMenu}">
+						</ic:inputSelectOneMenuBS>
+					</ui:repeat>
+				</div>
+			</div>
+		</div>
+	</div>
+</composite:implementation>
+
+</html>

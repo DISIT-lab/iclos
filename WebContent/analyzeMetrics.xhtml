@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/layout/template.xhtml">
+
+	<ui:define name="head">
+		<style>
+.c1 {
+	vertical-align: top;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="body">
+		<f:event listener="#{navigator.goToAnalyzeMetrics()}"
+			type="preRenderView" />
+		<f:event listener="#{navigator.beginConversation()}"
+			type="preRenderView" />
+		<f:event listener="#{analyzeMetricsMenu.createTree()}"
+			type="preRenderView" />
+		<h:form id="form">
+			<h:panelGroup layout="block" styleClass="panel panel-primary">
+				<h:panelGroup layout="block" styleClass="panel-heading">
+					<p:calendar value="#{analyzeMetricsController.dateFrom}"
+						pattern="#{analyzeMetricsController.DATEFORMATFORCALENDAR}"
+						placeholder="From Date" required="true" id="calendarDateFrom"
+						requiredMessage="From Date must be inserted." maxdate="#{analyzeMetricsController.dateTo}" autocomplete="false" >
+						<p:ajax event="dateSelect" update="calendarDateTo" />
+						</p:calendar>
+					<h:message styleClass="alert alert-danger" for="calendarDateFrom"></h:message>
+					<p:calendar value="#{analyzeMetricsController.dateTo}"
+						pattern="#{analyzeMetricsController.DATEFORMATFORCALENDAR}"
+						placeholder="To Date" required="true" id="calendarDateTo"
+						requiredMessage="To Date must be inserted." mindate="#{analyzeMetricsController.dateFrom}" autocomplete="false">
+						<p:ajax event="dateSelect" update="calendarDateFrom" />
+						</p:calendar>
+					<h:message styleClass="alert alert-danger" for="calendarDateTo"></h:message>
+					<h:commandLink id="visualizeMetrics"
+						action="#{analyzeMetricsController.createChartWithMetrics()}"
+						value="Metrics" styleClass="btn btn-default">
+					</h:commandLink>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-body">
+					<h:panelGrid columns="2"
+						rendered="#{not empty dataCenterController.dataCenterChoice}"
+						styleClass="col-md-12 col-lg-12"
+						columnClasses="col-lg-2 c1, col-lg-10">
+						<h:panelGroup layout="block" styleClass="col-lg-12">
+
+							<h:panelGroup layout="block" class="alert alert-info">
+								<strong>Info!</strong> Press CTRL to do multiple selection.
+							</h:panelGroup>
+							<p:tree value="#{analyzeMetricsMenu.root}" var="node" id="tree"
+								selectionMode="multiple" propagateSelectionDown="false"
+								propagateSelectionUp="false"
+								selection="#{analyzeMetricsMenu.selectedNodes}"
+								styleClass="col-lg-12">
+								<p:treeNode id="treeNode">
+									<h:outputText value="#{node.name}" />
+								</p:treeNode>
+							</p:tree>
+						</h:panelGroup>
+						<ui:repeat var="cartesianChartModel"
+							value="#{analyzeMetricsController.cartesianChartModelList}"
+							varStatus="cartesianChartModelStatus">
+							<h:panelGroup layout="block"
+								styleClass="panel panel-default col-lg-6"
+								rendered="#{not empty cartesianChartModel}">
+								<h:panelGroup layout="block"
+									styleClass="panel-body panel-default">
+									<h:panelGroup layout="block" styleClass="row">
+										<h:commandButton styleClass="btn btn-lg btn-default "
+											value="Reset Zoom"
+											onclick="PF('chart#{cartesianChartModel.title}').resetZoom()" />
+										<h:panelGroup layuot="block"
+											styleClass="btn btn-lg btn-default">
+											<h:outputText value="Filled " />
+											<p:selectBooleanCheckbox
+												value="#{analyzeMetricsController.filled[cartesianChartModelStatus.index]}">
+												<p:ajax update="chart" />
+											</p:selectBooleanCheckbox>
+										</h:panelGroup>
+										<h:panelGroup layuot="block"
+											styleClass="btn btn-lg btn-default">
+											<h:outputText value="Stacked " />
+											<p:selectBooleanCheckbox
+												value="#{analyzeMetricsController.stacked[cartesianChartModelStatus.index]}">
+												<p:ajax update="chart" />
+											</p:selectBooleanCheckbox>
+										</h:panelGroup>
+										<h:commandButton styleClass="btn btn-lg btn-default "
+											value="Original"
+											action="#{analyzeMetricsController.restoreScaleXAxis(cartesianChartModelStatus.index)}"
+											rendered="#{analyzeMetricsController.rescaled[cartesianChartModelStatus.index]}" />
+										<h:commandButton styleClass="btn btn-lg btn-default "
+											value="Hourly"
+											action="#{analyzeMetricsController.changeScaleXAxisHourly(cartesianChartModelStatus.index)}"
+											rendered="#{!analyzeMetricsController.rescaled[cartesianChartModelStatus.index]}" />
+										<h:commandButton styleClass="btn btn-lg btn-default "
+											value="Daily"
+											action="#{analyzeMetricsController.changeScaleXAxisDaily(cartesianChartModelStatus.index)}"
+											rendered="#{!analyzeMetricsController.rescaled[cartesianChartModelStatus.index]}" />
+										<h:commandButton styleClass="btn btn-lg btn-default "
+											value="Monthly"
+											action="#{analyzeMetricsController.changeScaleXAxisMonthly(cartesianChartModelStatus.index)}"
+											rendered="#{!analyzeMetricsController.rescaled[cartesianChartModelStatus.index]}" />
+									</h:panelGroup>
+									<p:lineChart id="chart"
+										widgetVar="chart#{cartesianChartModel.title}"
+										value="#{cartesianChartModel}" legendPosition="ne"
+										xaxisAngle="-60" zoom="true"
+										fill="#{analyzeMetricsController.filled[cartesianChartModelStatus.index]}"
+										stacked="#{analyzeMetricsController.stacked[cartesianChartModelStatus.index]}"
+										title="#{cartesianChartModel.title}" />
+								</h:panelGroup>
+							</h:panelGroup>
+						</ui:repeat>
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent">
+
+<h:panelGroup layout="block" class="panel panel-default">
+	<h:panelGroup layout="block" class="panel-heading clearfix">
+		<h:panelGroup layout="block" class="row">
+			<h:panelGroup layout="block" class="btn-group">
+				<button type="button" class="btn btn-default dropdown-toggle"
+					data-toggle="dropdown">
+					Add <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><h:commandLink
+							action="#{businessConfigurationForSimulatorViewer.addPanelIcaroApplication()}"
+							value="Icaro Application" /></li>
+					<li><h:commandLink
+							action="#{businessConfigurationForSimulatorViewer.addPanelCreator()}"
+							value="Creator"
+							rendered="#{businessConfigurationForSimulatorViewer.countCreator == 0}" /></li>
+				</ul>
+			</h:panelGroup>
+			<h:commandLink id="insertBCTopButtonActive"
+				action="#{businessConfigurationController.insertBusinessConfigurationOnSimulator()}"
+				styleClass="btn btn-default"
+				rendered="#{businessConfigurationForSimulatorViewer.buttonInsertBC}"
+				value="Insert">
+				<f:actionListener binding="#{dataCenterSimulator.extendRestoreRefreshTime()}"/>
+				<f:actionListener binding="#{utility.reset()}" />
+				<f:actionListener
+					binding="#{fakeSCE.invertViewBusinessConfigurationForm()}" />
+			</h:commandLink>
+			<h:commandLink id="insertBCTopButtonDisabled"
+				disabled="#{not businessConfigurationForSimulatorViewer.buttonInsertBC}"
+				styleClass="btn btn-default disabled"
+				rendered="#{not businessConfigurationForSimulatorViewer.buttonInsertBC}"
+				value="Insert">
+			</h:commandLink>
+		</h:panelGroup>
+	</h:panelGroup>
+	<h:panelGroup layout="block" class="panel-body">
+		<h:panelGroup layout="block"
+			rendered="#{!businessConfigurationForSimulatorViewer.buttonInsertBC}">
+			<h:panelGroup layout="block"
+				class="alert alert-warning alert-dismissable">
+							To <strong>activate </strong> the <strong>create XML</strong> button you must: <br />
+								#{businessConfigurationForSimulatorViewer.entityToAddMessage}
+						</h:panelGroup>
+		</h:panelGroup>
+		<br></br>
+		<h:panelGroup layout="block" id="panelBodyBusinessConfiguration"
+			binding="#{businessConfigurationForSimulatorViewer.panelBusinessConfigurationBody}">
+		</h:panelGroup>
+	</h:panelGroup>
+</h:panelGroup>
+
+</html>

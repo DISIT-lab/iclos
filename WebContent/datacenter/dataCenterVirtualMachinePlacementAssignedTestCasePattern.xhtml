@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/layout/template_noMenu.xhtml">
+
+	<ui:define name="head">
+		<meta http-equiv="refresh"
+			content="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.refreshTime}"></meta>
+
+<style type="text/css">
+.ui-ring-item {
+	border: 0 none;
+	width: 200px;
+}
+
+body {
+	padding-top: 80px;
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+    padding: 15px 0px ;
+    border:none;
+}
+
+.progress-bar > span {
+	color:black;
+}
+
+</style>
+	</ui:define>
+
+	<ui:define name="body">
+		
+		
+<!-- 		<f:event listener="#{navigator.beginConversation()}" -->
+<!-- 			type="preRenderView" /> -->
+		<f:event listener="#{navigator.goToDataCenterVirtualMachinePlacementDetail()}"
+			type="preRenderView" />		
+		
+		<h:panelGroup layout="block" styleClass="row">
+			<h:panelGroup layout="block" class=" panel panel-primary">
+				<h:panelGroup layout="block" class="panel-heading clearfix">
+					<h:panelGroup layout="block" styleClass="row">
+					
+						<h:panelGroup layout="block" styleClass="col-lg-9">
+						<h3 style="margin-left:10px">Selected test case: 
+						<h:outputText value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.selectedTestCase}" />
+						</h3>
+												
+						</h:panelGroup>
+												
+						
+					</h:panelGroup>
+					
+				</h:panelGroup>					
+			<h:panelGroup layout="block" class="panel-body">					
+				<table class="table table-striped text-center dataTableGrid">
+					<thead>
+					<th class="text-center">Id</th>
+					<th class="text-center">Name</th>
+					<th class="text-center">Role</th>
+					<th class="text-center">Path</th>
+					<th class="text-center"></th>
+					</thead>	
+					<tbody>
+						<ui:repeat var="iter" value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.testCaseViewer}">
+						<tr>
+							<td>#{iter.id}</td>
+							<td>#{iter.name}</td>
+							<td>#{iter.role}</td>
+							<td>#{iter.path}</td>											
+							<td>
+								<h:form>
+									<h:commandLink value="View" target="_blank" 
+									action="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.buildTestCasePattern(iter.id)}">
+									</h:commandLink>
+								</h:form>					
+							</td>
+						</tr>
+						</ui:repeat>
+					</tbody>
+				</table>		
+			</h:panelGroup>
+			</h:panelGroup>
+						
+			
+			
+			
+		</h:panelGroup>
+		
+	<h:outputScript library="js" name="initDataTable.js"></h:outputScript>
+	
+	</ui:define>
+</ui:composition>
+</html>

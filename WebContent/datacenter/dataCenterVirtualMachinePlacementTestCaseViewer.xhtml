@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/layout/template_noMenu.xhtml">
+
+	<ui:define name="head">
+		<meta http-equiv="refresh"
+			content="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.refreshTime}"></meta>
+
+	    <f:metadata>
+	   		<f:event listener="#{navigator.beginConversation()}"
+				type="preRenderView" />
+				
+	    	<f:event listener="#{placementTVCtrl.init()}"
+				type="preRenderView" />
+				
+	    </f:metadata>
+	    
+<style type="text/css">
+.ui-ring-item {
+	border: 0 none;
+	width: 200px;
+}
+
+body {
+	padding-top: 100px;
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+    padding: 15px 0px ;
+    border:none;
+}
+
+.progress-bar > span {
+	color:black;
+}
+
+</style>
+	</ui:define>
+
+	<ui:define name="body">
+		
+		<h:outputStylesheet library="css" name="bootstrap-switch.min.css"></h:outputStylesheet>
+	
+		
+		<h:panelGroup layout="block" class="row">					
+					<h:panelGroup layout="block" class=" panel panel-primary">
+							<h:panelGroup layout="block" class="panel-heading clearfix">									
+										<h4 style="margin-left:20px;float: left">Id: <strong> #{placementTVCtrl.id}</strong>,
+										#{placementTVCtrl.testPatternReview.name} - #{placementTVCtrl.testPatternReview.role} - #{placementTVCtrl.testPatternReview.path}															
+										</h4>
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="panel-body">
+							
+								<h:panelGroup layout="block" styleClass="row">													
+								<h:panelGroup layout="block" styleClass="alert alert-warning col-lg-6 col-lg-offset-3 text-center">
+								<h4>The value presented here are the original quantized values of the model.<br /> Values can range between 0 and 100.</h4>
+								</h:panelGroup>
+								</h:panelGroup>
+								
+							<h:panelGroup layout="block" styleClass="row" rendered="#{placementTVCtrl.testPatternReview.lineModelCpu != null}">
+																
+											
+								<h:panelGroup layout="block" styleClass="col-lg-6">
+									<h:panelGroup layout="block" styleClass="row">
+									<h:commandButton styleClass="btn btn-sm btn-default" value="Reset zoom" onclick="PF('chart3').resetZoom()" />
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="row">
+										<p:chart widgetVar="chart3" type="line" 
+										rendered="#{placementTVCtrl.testPatternReview.lineModelCpu != null}" 
+										model="#{placementTVCtrl.testPatternReview.lineModelCpu}" style="height:300px;"/>										
+									</h:panelGroup>										
+								</h:panelGroup>
+								
+								<h:panelGroup layout="block" styleClass="col-lg-6">
+									<h:panelGroup layout="block" styleClass="row">
+									<h:commandButton styleClass="btn btn-sm btn-default" value="Reset zoom" onclick="PF('chart4').resetZoom()" />
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="row">
+									<p:chart widgetVar="chart4" type="line" stacked="true"
+									rendered="#{placementTVCtrl.testPatternReview.lineModelMemory != null}" 
+									model="#{placementTVCtrl.testPatternReview.lineModelMemory}" style="height:300px;"/>																		
+									</h:panelGroup>							
+								</h:panelGroup>									
+												    			
+					</h:panelGroup>		
+							</h:panelGroup>
+					</h:panelGroup>
+		</h:panelGroup>
+						
+		
+		
+		<h:outputScript library="js" name="VmPlacementChartLineWorkloadExtender.js"></h:outputScript>
+<!-- 		<h:outputScript library="js" name="jquery-1.11.0.js"></h:outputScript> -->
+		<h:outputScript library="js" name="bootstrap-switch.min.js"></h:outputScript>		 
+		<h:outputScript library="js" name="VmPlacementDetail.js"></h:outputScript>
+	</ui:define>
+</ui:composition>
+</html>

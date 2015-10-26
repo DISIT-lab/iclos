@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/layout/template_noMenu.xhtml">
+
+	<ui:define name="head">
+		<meta http-equiv="refresh"
+			content="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.refreshTime}"></meta>
+
+	    <f:metadata>
+<!-- 	    	<f:viewParam name="id" value="#{placementIDCtrl.id}" /> -->
+	    	
+	    	<f:event listener="#{navigator.beginConversation()}"
+				type="preRenderView" />
+	    	
+	    	<f:event listener="#{placementIDCtrl.init()}"
+				type="preRenderView" />
+	    </f:metadata>
+	    
+<style type="text/css">
+.ui-ring-item {
+	border: 0 none;
+	width: 200px;
+}
+
+body {
+	padding-top: 100px;
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+    padding: 15px 0px ;
+    border:none;
+}
+
+.progress-bar > span {
+	color:black;
+}
+
+</style>
+	</ui:define>
+
+	<ui:define name="body">
+		
+		<h:outputStylesheet library="css" name="bootstrap-switch.min.css"></h:outputStylesheet>
+		
+<!-- 		<f:event listener="#{navigator.beginConversation()}" -->
+<!-- 			type="preRenderView" /> -->
+<!-- 		<f:event listener="#{navigator.goToDataCenterVirtualMachinePlacementDetail()}" -->
+<!-- 			type="preRenderView" />		 -->		
+		
+		<h:panelGroup layout="block" class="row">					
+					<h:panelGroup layout="block" class=" panel panel-primary">
+							<h:panelGroup layout="block" class="panel-heading clearfix">									
+									<h:form>										
+										<h4 style="margin-left:20px;float: left">Iteration <strong> #{placementIDCtrl.id}</strong>, data center - <strong> 
+										#{placementIDCtrl.machinePlacement.machine.hasName}</strong> 
+										<h:outputText styleClass="label label-info" style=" margin-left:20px;padding:5px;font-size:18px" 
+										id="n_assignedHost" value="#Hosts: #{placementIDCtrl.machinePlacement.assignedMachineSize}"/>
+										<p:tooltip for="n_assignedHost">Number of host used</p:tooltip>
+									
+										<h:outputText rendered="#{placementIDCtrl.selectedIteration.availableHost.size() > placementIDCtrl.machinePlacement.assignedMachineSize }" 
+										styleClass="label label-success" style=" margin-left:20px;padding:5px;font-size:18px" 
+										id="n_unusedHost" value="#Not used hosts: #{placementIDCtrl.selectedIteration.availableHost.size() - placementIDCtrl.machinePlacement.assignedMachineSize}"/>
+										<p:tooltip for="n_unusedHost">Number of unused host</p:tooltip>
+										
+										<h:outputText rendered="#{placementIDCtrl.machinePlacement.assignedMachineSize > placementIDCtrl.selectedIteration.availableHost.size()}" 
+										styleClass="label label-warning" style=" margin-left:20px;padding:5px;font-size:18px" 
+										id="n_addedHost" value="#Added hosts while simulating allocation: #{placementIDCtrl.machinePlacement.assignedMachineSize - placementIDCtrl.selectedIteration.availableHost.size()}"/>
+										<p:tooltip for="n_addedHost">Number of added host to allocate all VMs</p:tooltip>
+																															
+										</h4>
+										<h:panelGroup layout="block" style="float:right">
+										<h:commandButton value="Change chart details" style="float:right"  
+										styleClass="btn btn-info btn-lg"
+										action="#{placementIDCtrl.toggleDataCenterChartView}" />						
+										</h:panelGroup>
+									</h:form>
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="panel-body">					
+								<ui:include src="/datacenter/composition/dataCenterVirtualMachinePlacementDetailDataCenter.xhtml" />
+<!-- 								<ui:include src="/datacenter/composition/dataCenterVirtualMachinePlacementDetailHost.xhtml" />		 -->
+							</h:panelGroup>
+					</h:panelGroup>
+					</h:panelGroup>
+						
+		<h:outputScript library="js" name="initDataTable.js"></h:outputScript>				
+		<h:outputScript library="js" name="VmPlacementChartStackedWorkloadExtender.js"></h:outputScript>
+		
+	</ui:define>
+</ui:composition>
+</html>

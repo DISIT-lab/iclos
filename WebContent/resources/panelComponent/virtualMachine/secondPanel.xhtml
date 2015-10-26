@@ -1,0 +1,121 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent">
+
+<composite:interface>
+	<composite:attribute name="idCC" />
+	<composite:attribute name="idCCParent" />
+	<composite:attribute name="indexPanel" required="true" />
+	<composite:attribute name="indexPanelParent" />
+	<composite:attribute name="titlePanel" required="true" />
+	<composite:attribute name="removeAction" />
+	<composite:attribute name="listInputIP" />
+	<composite:attribute name="listInputDate" />
+	<composite:attribute name="listInputEmail" />
+	<composite:attribute name="listInputText" />
+	<composite:attribute name="listInputNumber" />
+	<composite:attribute name="listInputSelectOneMenu" />
+	<composite:attribute name="listInputSelectOneMenuDynamic" />
+	<composite:attribute name="listDropDownMenu" />
+	<composite:attribute name="objectLinkToPanel" required="true" />
+	<composite:attribute name="bindingToBody" />
+</composite:interface>
+
+<composite:implementation>
+	<h:panelGroup layout="block"
+		styleClass="panel panel-success">
+		<h:panelGroup layout="block"
+		styleClass="panel-heading">
+			<button type="button" class="btn btn-success"
+				data-toggle="collapse"
+				data-target="#collapsePanelBody#{cc.attrs.indexPanel}" />
+			#{cc.attrs.titlePanel}
+			<h:panelGroup layout="block" class="btn-group">
+				<ui:repeat var="dropDownMenu" value="#{cc.attrs.listDropDownMenu}">
+					<button type="button"
+						class="btn btn-success dropdown-toggle"
+						data-toggle="dropdown">
+						#{dropDownMenu.label} <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<ui:repeat var="dropDownItem"
+							value="#{dropDownMenu.listDropDownItem}">
+							<li><h:commandLink
+									action="#{virtualMachineViewer[dropDownItem.action](cc.attrs.bindingToBody, cc.attrs.indexPanelParent, cc.attrs.indexPanel)}"
+									value="#{dropDownItem.value}" /></li>
+						</ui:repeat>
+					</ul>
+				</ui:repeat>
+			</h:panelGroup>
+			<h:commandLink
+				action="#{virtualMachineViewer[cc.attrs.removeAction](cc.attrs.idCCParent, cc.attrs.idCC,cc.attrs.indexPanelParent, cc.attrs.indexPanel)}"
+				value="x" type="button" class="close" immediate="true" />
+		</h:panelGroup>
+		<h:panelGroup layout="block"
+		 id="collapsePanelBody#{cc.attrs.indexPanel}"
+			styleClass="panel-collapse collapse in">
+			<h:panelGroup layout="block" class="panel-body"
+				binding="#{cc.attrs.bindingToBody}">
+				<ui:repeat var="inputIP" value="#{cc.attrs.listInputIP}">
+					<ic:inputIPBS preAddon="#{inputIP.label}" id="number"
+						required="true" requiredMessage="This field must not be empty."
+						placeholder="#{inputIP.placeholder}" validatorId="URLValidator"
+						value="#{cc.attrs.objectLinkToPanel[inputIP.value]}">
+					</ic:inputIPBS>
+				</ui:repeat>
+				<ui:repeat var="inputText" value="#{cc.attrs.listInputText}">
+					<ic:inputTextBS preAddon="#{inputText.label}" id="text"
+						required="true" requiredMessage="This field must not be empty."
+						placeholder="#{inputText.placeholder}"
+						value="#{cc.attrs.objectLinkToPanel[inputText.value]}">
+					</ic:inputTextBS>
+				</ui:repeat>
+				<ui:repeat var="inputNumber" value="#{cc.attrs.listInputNumber}">
+					<ic:inputNumberBS preAddon="#{inputNumber.label}" id="number"
+						required="true" requiredMessage="This field must not be empty."
+						placeholder="#{inputNumber.placeholder}"
+						converterId="DigitsOnlyConverter"
+						converterMessage="You can only insert digit."
+						value="#{cc.attrs.objectLinkToPanel[inputNumber.value]}"
+						minimumValue="1" maximumValue="20000">
+					</ic:inputNumberBS>
+				</ui:repeat>
+				<ui:repeat var="inputSelectOneMenu"
+					value="#{cc.attrs.listInputSelectOneMenu}">
+					<ic:inputSelectOneMenuBS preAddon="#{inputSelectOneMenu.label}"
+						value="#{cc.attrs.objectLinkToPanel[inputSelectOneMenu.value]}"
+						listInputSelectOneMenu="#{inputSelectOneMenu.listSelectOneMenu}">
+					</ic:inputSelectOneMenuBS>
+				</ui:repeat>
+				<ui:repeat var="inputSelectOneMenuDynamic"
+					value="#{cc.attrs.listInputSelectOneMenuDynamic}">
+					<ic:inputSelectOneMenuBS
+						preAddon="#{inputSelectOneMenuDynamic.label}"
+						value="#{cc.attrs.objectLinkToPanel[inputSelectOneMenuDynamic.value]}"
+						listInputSelectOneMenu="#{inputSelectOneMenuDynamic.listSelectOneMenu}">
+					</ic:inputSelectOneMenuBS>
+				</ui:repeat>
+				<ui:repeat var="inputDate" value="#{cc.attrs.listInputDate}">
+					<ic:inputDateBS preAddon="#{inputDate.label}" id="date"
+						required="true" requiredMessage="This field must not be empty."
+						placeholder="#{inputDate.placeholder}"
+						value="#{cc.attrs.objectLinkToPanel[inputDate.value]}">
+					</ic:inputDateBS>
+				</ui:repeat>
+				<ui:repeat var="inputEmail" value="#{cc.attrs.listInputEmail}">
+					<ic:inputEmailBS preAddon="#{inputEmail.label}" id="email"
+						required="true" requiredMessage="This field must not be empty."
+						placeholder="#{inputEmail.placeholder}"
+						value="#{cc.attrs.objectLinkToPanel[inputEmail.value]}">
+					</ic:inputEmailBS>
+				</ui:repeat>
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:panelGroup>
+</composite:implementation>
+
+</html>

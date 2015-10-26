@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+		<f:event listener="#{navigator.beginConversation()}"
+			type="preRenderView" />
+		<h:form>
+
+
+			<h:panelGroup layout="block" style="margin-top:10%;margin-left:30%">
+				<c:if test="#{not empty navigator.conversation.id}">
+					<h:link outcome="dataCenterVirtualMachinePlacement"
+						value="New allocation" styleClass="btn btn-default btn-lg">
+						<f:param name="cid" value="#{navigator.conversation.id}" />
+					</h:link>
+				</c:if>
+				<c:if test="#{empty navigator.conversation.id}">
+					<h:link outcome="dataCenterVirtualMachinePlacement"
+						value="New allocation" styleClass="btn btn-default btn-lg">
+					</h:link>
+				</c:if>
+				<c:if test="#{not empty navigator.conversation.id}">
+					<h:link outcome="dataCenterVirtualMachinePlacementAnalyzeResult"
+						value="Analyze result" styleClass="btn btn-default btn-lg">
+						<f:param name="cid" value="#{navigator.conversation.id}" />
+					</h:link>
+				</c:if>
+				<c:if test="#{empty navigator.conversation.id}">
+					<h:link outcome="dataCenterVirtualMachinePlacementAnalyzeResult"
+						value="Analyze result" styleClass="btn btn-default btn-lg">
+					</h:link>
+				</c:if>
+				<c:if test="#{not empty navigator.conversation.id}">
+					<h:link outcome="vmPlacementTestRunner"
+						value="Test runner" styleClass="btn btn-default btn-lg">
+						<f:param name="cid" value="#{navigator.conversation.id}" />
+					</h:link>
+				</c:if>
+				<c:if test="#{empty navigator.conversation.id}">
+					<h:link outcome="vmPlacementTestRunner"
+						value="Test runner" styleClass="btn btn-default btn-lg">
+					</h:link>
+				</c:if>
+				
+				<c:if test="#{not empty navigator.conversation.id}">
+					<h:link outcome="PlacementTestViewer"
+						value="Test case viewer" styleClass="btn btn-default btn-lg">
+						<f:param name="cid" value="#{navigator.conversation.id}" />
+					</h:link>
+				</c:if>
+				<c:if test="#{empty navigator.conversation.id}">
+					<h:link outcome="PlacementTestViewer"
+						value="Test case viewer" styleClass="btn btn-default btn-lg">
+					</h:link>
+				</c:if>
+			</h:panelGroup>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

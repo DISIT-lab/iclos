@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="preAddon" required="true" />
+	<composite:attribute name="value" required="true" />
+	<composite:attribute name="listInputSelectOneMenu" required="true" />
+
+</composite:interface>
+
+<composite:implementation>
+	<h:panelGroup layout="block" styleClass="row">
+		<h:panelGroup layout="block" styleClass="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			<h:panelGroup layout="block" styleClass="input-group">
+				<h:panelGroup layout="block" styleClass="input-group-addon">
+					<h:outputText value="#{cc.attrs.preAddon}" />
+				</h:panelGroup>
+				<h:selectOneMenu value="#{cc.attrs.value}" styleClass="form-control">
+					<f:selectItems var="inputSelectOneMenu"
+						value="#{cc.attrs.listInputSelectOneMenu}"
+						itemLabel="#{inputSelectOneMenu.label}"
+						itemValue="#{inputSelectOneMenu.value}" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:panelGroup>
+</composite:implementation>
+</html>

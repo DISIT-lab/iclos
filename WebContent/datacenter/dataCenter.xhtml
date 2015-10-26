@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="head">
+		<style>
+.c2 {
+	padding-left: 8px;
+}
+</style>
+	</ui:define>
+	<ui:define name="body">
+		<f:event listener="#{navigator.beginConversation()}"
+			type="preRenderView" />
+		<f:event listener="#{navigator.goToDataCenter()}" type="preRenderView" />
+
+		<h:form id="principalForm">
+			<h:panelGroup layout="block" class="panel panel-primary">
+				<h:panelGroup layout="block" class="panel-heading clearfix">
+					<h:panelGroup layout="block" class="row">
+						<h:panelGroup layout="block" class="btn-group">
+							<button type="button"
+								class="btn btn-primary btn-lg dropdown-toggle"
+								data-toggle="dropdown">
+								Add <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><h:commandLink
+										action="#{dataCenterViewer.addPanelGroupHostMachine()}"
+										value="Host Machine" /></li>
+								<li><h:commandLink
+										action="#{dataCenterViewer.addPanelGroupExternalStorage()}"
+										value="External Storage" /></li>
+								<li><h:commandLink
+										action="#{dataCenterViewer.addPanelGroupFirewall()}"
+										value="Firewall" /></li>
+								<li><h:commandLink
+										action="#{dataCenterViewer.addPanelGroupRouter()}" 
+										value="Router" /></li>
+							</ul>
+						</h:panelGroup>
+
+						<h:commandLink id="createXMLTopButtonActive"
+							action="#{dataCenterController.createDataCenterXML()}"
+							styleClass="btn btn-primary btn-lg"
+							rendered="#{dataCenterViewer.buttonCreateXML}" value="Create XML">
+							<f:actionListener binding="#{dataCenterController.resetMessages()}" />
+						</h:commandLink>
+
+						<h:commandLink id="createXMLTopButtonDisabled"
+							disabled="#{not dataCenterViewer.buttonCreateXML}"
+							styleClass="btn btn-primary btn-lg disabled"
+							rendered="#{not dataCenterViewer.buttonCreateXML}"
+							value="Create XML">
+						</h:commandLink>
+
+						<!-- Qua ho inserito due bottoni perché usando il CSS non posso modificare lo styleClass di un bottone dinamicamente in base 
+						al valore di una proprietà. Con due bottoni posso metterne uno disabilitato con lo styleClass 'disabled' e uno attivo
+						senza tale styleClass. -->
+
+					</h:panelGroup>
+
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="panel-body">
+
+					<h:panelGroup layout="block"
+						rendered="#{!dataCenterViewer.buttonCreateXML}">
+						<h:panelGroup layout="block"
+							class="alert alert-warning alert-dismissable">
+							To <strong>activate </strong> the <strong>create XML</strong> button you must: <br />
+								#{dataCenterViewer.entityToAddMessage}
+						</h:panelGroup>
+					</h:panelGroup>
+
+					<ic:inputTextBS preAddon="urn:cloudicaro:DataCenter:"
+						requiredMessage="This field must not be empty"
+						value="#{dataCenterController.dataCenter.localUri}"
+						id="inputTextDataCenterLocalUri" required="true"
+						placeholder="Insert localUri"></ic:inputTextBS>
+					<ic:inputTextBS preAddon="hasName"
+						requiredMessage="This field must not be empty"
+						value="#{dataCenterController.dataCenter.hasName}"
+						id="inputTextDataCenterName" required="true"
+						placeholder="Insert name"></ic:inputTextBS>
+					<ic:inputTextBS preAddon="hasIdentifier"
+						requiredMessage="This field must not be empty"
+						value="#{dataCenterController.dataCenter.hasIdentifier}"
+						id="inputTextDataCenterIdentifier" required="true"
+						placeholder="Insert identifier"></ic:inputTextBS>
+					<br></br>
+					<h:panelGroup layout="block" id="panelDataCenterBody"
+						binding="#{dataCenterViewer.panelDataCenterBody}">
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/layout/template.xhtml">
+
+	<ui:define name="head">
+		<meta http-equiv="refresh"
+			content="#{dataCenterController.placementSimulatorTestRunner.refreshTime}"></meta>
+		<style type="text/css">
+.ui-ring-item {
+	border: 0 none;
+	width: 200px;
+}
+
+body {
+	padding-top: 170px;
+}
+
+.twenty-percent {
+     width: 20%;
+}
+
+.eigthy-percent {
+     width: 70%;
+}
+
+</style>
+	</ui:define>
+
+	<ui:define name="body">
+		<f:event listener="#{navigator.beginConversation()}"
+			type="preRenderView" />
+		<f:event listener="#{navigator.goToVmPlacementTestRunner()}"
+			type="preRenderView" />
+				
+
+		<h:form id="startVmPlacementSimulation">
+		<h:panelGroup layout="block" class="panel panel-primary" rendered="#{not dataCenterController.placementSimulatorTestRunnerStarted}">
+				<h:panelGroup layout="block" class="panel-heading clearfix">
+					<h:panelGroup layout="block" class="row">
+						
+							<h:panelGroup layout="block" class="col-lg-12">	
+								<h:commandLink 															
+									styleClass="btn btn-primary btn-lg"																					
+									value="Start Test" action="#{dataCenterController.runVmPlacementTest()}">									
+								</h:commandLink>
+							</h:panelGroup>
+										
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="panel-body">
+				
+					<h:panelGroup layout="block" styleClass="row">
+
+					<h:panelGroup layout="block" styleClass="col-lg-7">
+						<h:panelGroup layout="block" styleClass="row">
+						
+							<h:panelGroup layout="block" class="col-lg-12">	
+							<h:panelGrid columns="3" cellpadding="5" cellspacing="5px" style="margin:0 auto;" >
+								
+								<h:outputText value="Data center size:" style="margin:10px;"/>
+								<p:inputText id="dcSizes" style="margin:10px;width:150px;" 
+						       		value="#{dataCenterController.placementSimulatorTestRunner.dataCenterSizes}">		 		        	   		   	
+				       		   	</p:inputText>
+								<h:outputText value="" />  	
+								
+								<h:outputText value="Export result object:" style="margin:10px;"/>						        
+			       				<h:selectBooleanCheckbox  style="margin:10px;" value="#{dataCenterController.placementSimulatorTestRunner.exportResultObject}" />
+			       				<h:outputText value="" />  	
+								
+							   <h:outputText value="Reserved OS resource:" style="margin:10px;" />
+						       <p:inputText id="hostOSmem" style="margin:10px;width:50px;" 
+						       		value="#{dataCenterController.placementSimulatorTestRunner.reservedOsHostResource}">
+		 		        	   		<f:convertNumber type="percent" />		 		        	   		
+				       		   </p:inputText>
+				       		   <p:message for="hostOSmem" id="msghostOSmem" display="icon" />
+						    
+						        <h:outputText value="Max risk:" style="margin:10px;" />
+						        <p:inputText id="hostOSmaxRisk" style="margin:10px;width:50px;"	
+						        	value="#{dataCenterController.placementSimulatorTestRunner.hostMaxRisk}">
+			       					<f:convertNumber type="percent" />			       					
+			       				</p:inputText>
+			       				<p:message for="hostOSmaxRisk"  display="icon" />
+						    
+						        <h:outputText value="Max over-provisioning time:" style="margin:10px;"/>
+						        <p:inputText id="hostOverMaxTime" style="margin:10px; width:50px;"
+						        	value="#{dataCenterController.placementSimulatorTestRunner.maxOverprovisioningTime}">
+			       					<f:convertNumber type="percent" />			       					
+			       				</p:inputText>		
+			       				<p:message for="hostOverMaxTime" display="icon" />	
+			       							       				
+								<h:outputText value="Select coefficient for euristic:" style="margin:10px;"/>
+								<h:selectOneMenu id="availableEuristicCoeffBuilde" style="margin:10px;"
+									value="#{dataCenterController.placementSimulatorTestRunner.selectedEuristicCoefficientBuilder}">
+									<f:selectItems value="#{dataCenterController.placementSimulatorTestRunner.euristicCoefficientBuilders}" />									
+								</h:selectOneMenu>
+								<h:outputText value="" />
+								
+			       				 <h:outputText value="N. iteration for GRASP heuristic:" style="margin:10px;"  />
+							       <p:inputText id="nIter" style="margin:10px;width:50px;" 
+							       		value="#{dataCenterController.placementSimulatorTestRunner.n_runs}">
+			 		        	   		<f:convertNumber type="number" maxFractionDigits="0" />			 		        	   		
+					       		   </p:inputText>
+					       		   <h:outputText value="" />  	
+					       		   
+					       		   <h:outputText value="N. iteration of simulation:" style="margin:10px;" />
+							       <p:inputText id="nIterSim" style="margin:10px;width:50px;" 
+							       		value="#{dataCenterController.placementSimulatorTestRunner.n_simulation}">
+			 		        	   		<f:convertNumber type="number" maxFractionDigits="0" />			 		        	   		
+					       		   </p:inputText>
+					       		   <p:message for="nIterSim" id="msgNsim" display="icon" />
+					       		   
+					       		   <h:outputText value="Test case ratio:" style="margin:10px;"/>
+									<h:selectOneMenu id="availableTestCase" style="margin:10px;"
+										value="#{dataCenterController.placementSimulatorTestRunner.selectedTestCase}">
+										<f:selectItems value="#{dataCenterController.placementSimulatorTestRunner.availableTestCases}" />									
+									</h:selectOneMenu>
+									<h:outputText value="" />  	
+			       							       				
+	       					</h:panelGrid>
+						</h:panelGroup>
+						</h:panelGroup>	
+					</h:panelGroup>
+										
+					<h:panelGroup layout="block" styleClass="col-lg-5">						
+						<h:panelGroup layout="block" class="alert alert-info">
+								<h4>Added host template</h4>
+								<h:panelGrid columns="3" cellpadding="5" cellspacing="5px" style="margin:0 auto;" >
+							   <h:outputText value="CPU count:" style="margin:10px;" />
+						       <p:inputText style="margin:10px;width:80px;" 
+						       		value="#{dataCenterController.placementSimulatorTestRunner.addedHostCpuCount}">		 		        	   				 		        	   		
+				       		   </p:inputText>
+				       		   <br/>
+				       		   <h:outputText value="CPU speed (MHz):" style="margin:10px;" />
+						       <p:inputText style="margin:10px;width:80px;" 
+						       		value="#{dataCenterController.placementSimulatorTestRunner.addedHostCpuFreq}">		 		        	   				 		        	   		
+				       		   </p:inputText>
+				       		   <br/>
+				       		   <h:outputText value="Memory size (GB):" style="margin:10px;" />
+						       <p:inputText style="margin:10px;width:80px;" 
+						       		value="#{dataCenterController.placementSimulatorTestRunner.addedHostMemSize}">		 		        	   				 		        	   		
+				       		   </p:inputText>
+				       		   <br/>
+						    	</h:panelGrid>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="alert alert-info">
+								<h4> If any GRASP heuristic is used the iteration with the minimum number of used hosts will be selected and showed as a single iteration result.</h4>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>					
+		    	</h:panelGroup>
+		    			    	
+		</h:panelGroup>
+		</h:form>	
+		
+		<!-- SIMULATION PROGRESS -->	
+		<h:panelGroup layout="block" styleClass="row">
+		<h:panelGroup layout="block" styleClass="col-lg-offset-1 col-lg-10">
+			<h:panelGroup layout="block" styleClass="panel panel-default">
+				<h:panelGroup layout="block" styleClass="panel-heading">Progress of simulation</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-body">
+					<h:panelGroup layout="block" styleClass="row">		
+					<c:if
+						test="#{empty dataCenterController.placementSimulatorTestRunner.completedSimulation}">
+						<h:panelGroup layout="block"
+							styleClass="progress progress-striped active">
+							<h:panelGroup layout="block"
+								styleClass="progress-bar progress-bar-success"
+								role="progressbar" aria-valuenow="100" aria-valuemin="0"
+								aria-valuemax="100" style="width: 100%;">100%</h:panelGroup>
+						</h:panelGroup>
+					</c:if>
+					<c:if
+						test="#{not empty dataCenterController.placementSimulatorTestRunner.completedSimulation}">
+						<c:if
+							test="#{35 >= dataCenterController.placementSimulatorTestRunner.completedSimulation}">
+							<h:panelGroup layout="block"
+								styleClass="progress progress-striped active">
+								<h:panelGroup layout="block"
+									styleClass="progress-bar progress-bar-danger"
+									role="progressbar"
+									aria-valuenow="#{dataCenterController.placementSimulatorTestRunner.completedSimulation}"
+									aria-valuemin="0" aria-valuemax="100"
+									style="width: #{dataCenterController.placementSimulatorTestRunner.completedSimulation}%;">
+						#{dataCenterController.placementSimulatorTestRunner.completedSimulation}%
+					</h:panelGroup>
+							</h:panelGroup>
+						</c:if>
+						<c:if
+							test="#{75 >= dataCenterController.placementSimulatorTestRunner.completedSimulation and dataCenterController.placementSimulatorTestRunner.completedSimulation >= 36}">
+							<h:panelGroup layout="block"
+								styleClass="progress progress-striped active">
+								<h:panelGroup layout="block"
+									styleClass="progress-bar progress-bar-warning"
+									role="progressbar"
+									aria-valuenow="#{dataCenterController.placementSimulatorTestRunner.completedSimulation}"
+									aria-valuemin="0" aria-valuemax="100"
+									style="width: #{dataCenterController.placementSimulatorTestRunner.completedSimulation}%;">
+						#{dataCenterController.placementSimulatorTestRunner.completedSimulation}%
+					</h:panelGroup>
+							</h:panelGroup>
+						</c:if>
+						<c:if
+							test="#{dataCenterController.placementSimulatorTestRunner.completedSimulation >= 76}">
+							<h:panelGroup layout="block"
+								styleClass="progress progress-striped active">
+								<h:panelGroup layout="block"
+									styleClass="progress-bar progress-bar-success"
+									role="progressbar"
+									aria-valuenow="#{dataCenterController.placementSimulatorTestRunner.completedSimulation}"
+									aria-valuemin="0" aria-valuemax="100"
+									style="width: #{dataCenterController.placementSimulatorTestRunner.completedSimulation}%;">
+						#{dataCenterController.placementSimulatorTestRunner.completedSimulation}%
+					</h:panelGroup>
+							</h:panelGroup>
+						</c:if>
+					</c:if>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="row text-center">
+					<h4>#{dataCenterController.placementSimulatorTestRunner.iterationStatus}</h4>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
+		<h:panelGroup layout="block" styleClass="col-lg-offset-1 col-lg-10">
+			<h:panelGroup layout="block" styleClass="panel panel-default">
+				<h:panelGroup layout="block" styleClass="panel-heading">Log of simulation</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-body" style="overflow:auto; max-height:350px;">
+					<h:outputText
+						value="#{dataCenterController.placementSimulatorTestRunner.monitorString}"
+						escape="false" />
+				</h:panelGroup>
+			</h:panelGroup>
+
+		</h:panelGroup>
+		</h:panelGroup>
+		
+		<h:outputScript library="js" name="initTooltip.js"></h:outputScript>	
+		
+	</ui:define>
+</ui:composition>
+</html>

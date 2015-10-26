@@ -1,0 +1,366 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/layout/template.xhtml">
+
+	<ui:define name="head">
+		<meta http-equiv="refresh"
+			content="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.refreshTime}"></meta>
+		<style type="text/css">
+.ui-ring-item {
+	border: 0 none;
+	width: 200px;
+}
+
+body {
+	padding-top: 170px;
+}
+
+.twenty-percent {
+     width: 20%;
+}
+
+.eigthy-percent {
+     width: 70%;
+}
+
+</style>
+	</ui:define>
+
+	<ui:define name="body">
+		<f:event listener="#{navigator.beginConversation()}"
+			type="preRenderView" />
+		<f:event listener="#{navigator.goToDataCenterVirtualMachinePlacement()}"
+			type="preRenderView" />
+		<f:event
+			listener="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.checkCollectedDataExistence()}"
+			type="preRenderView" />		
+				
+		<!-- DATA COLLECTED PANEL -->
+		<h:panelGroup layout="block" styleClass="row">
+		<h:panelGroup layout="block" styleClass="alert alert-danger" rendered="#{not dataCenterController.virtualMachinePlacementSimulatorStarted and not dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData}">
+			<h2><strong>Attention!</strong></h2> <h3>Pattern files not found. Please collect data.</h3>
+		</h:panelGroup>
+		<h:button outcome="collectData" styleClass="btn btn-lg btn-success centralH"
+		 	rendered="#{not dataCenterController.virtualMachinePlacementSimulatorStarted and not dataCenterController.dataCenterVirtualMachinePlacementSimulator.existsCollectedData}"
+			value="Collect Data">
+		</h:button>
+		</h:panelGroup>
+
+		<h:form id="startVmPlacementSimulation">
+		<h:panelGroup layout="block" class="panel panel-primary" rendered="#{not dataCenterController.virtualMachinePlacementSimulatorStarted}">
+				<h:panelGroup layout="block" class="panel-heading clearfix">
+					<h:panelGroup layout="block" class="row">
+						
+							<h:panelGroup layout="block" class="col-lg-12">	
+								<h:commandLink 															
+									styleClass="btn btn-primary btn-lg"																					
+									value="Assign pattern" action="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.assignPatternToVMs()}">									
+								</h:commandLink>	
+								<h:commandLink 						
+									disabled="#{not dataCenterController.dataCenterVirtualMachinePlacementSimulator.allVmHasPattern}"
+									styleClass="btn btn-primary btn-lg #{not dataCenterController.dataCenterVirtualMachinePlacementSimulator.allVmHasPattern ? 'disabled' : '' }"																					
+									value="Start VMs placement" action="#{dataCenterController.simulateVirtualMachinePlacement()}">									
+								</h:commandLink>
+							</h:panelGroup>
+										
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="panel-body">
+				
+					<h:panelGroup layout="block" styleClass="row">
+
+					<h:panelGroup layout="block" styleClass="col-lg-7">
+						<h:panelGroup layout="block" styleClass="row">
+						
+							<h:panelGroup layout="block" class="col-lg-12">	
+							<h:panelGrid columns="3" cellpadding="5" cellspacing="5px" style="margin:0 auto;" >
+								
+							
+							   <h:outputText value="Reserved OS resource:" style="margin:10px;" />
+						       <p:inputText id="hostOSmem" style="margin:10px;width:50px;" 
+						       		value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.reservedOsHostResource}">
+		 		        	   		<f:convertNumber type="percent" />		 		        	   		
+				       		   </p:inputText>
+				       		   <p:message for="hostOSmem" id="msghostOSmem" display="icon" />
+						    
+						        <h:outputText value="Max risk:" style="margin:10px;" />
+						        <p:inputText id="hostOSmaxRisk" style="margin:10px;width:50px;"	
+						        	value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.hostMaxRisk}">
+			       					<f:convertNumber type="percent" />			       					
+			       				</p:inputText>
+			       				<p:message for="hostOSmaxRisk"  display="icon" />
+						    
+						        <h:outputText value="Max over-provisioning time:" style="margin:10px;"/>
+						        <p:inputText id="hostOverMaxTime" style="margin:10px; width:50px;"
+						        	value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.maxOverprovisioningTime}">
+			       					<f:convertNumber type="percent" />			       					
+			       				</p:inputText>		
+			       				<p:message for="hostOverMaxTime" display="icon" />	
+			       				
+			       				<h:outputText value="Select euristic:" style="margin:10px;"/>
+			       				<h:selectOneMenu id="availableEuristicController" style="margin:10px;"
+									value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.selectedEuristicMethod}">
+									<f:selectItems value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.euristic_method}" />									
+								</h:selectOneMenu>
+								<h:outputText value="" />
+								
+								<h:outputText value="Select coefficient for euristic:" style="margin:10px;"/>
+								<h:selectOneMenu id="availableEuristicCoeffBuilde" style="margin:10px;"
+									value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.selectedEuristicCoefficientBuilder}">
+									<f:selectItems value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.euristicCoefficientBuilders}" />									
+								</h:selectOneMenu>
+								<h:outputText value="" />
+								
+			       				 <h:outputText value="N. iteration for GRASP heuristic:" style="margin:10px;"  />
+							       <p:inputText id="nIter" style="margin:10px;width:50px;" 
+							       		value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.n_runs}">
+			 		        	   		<f:convertNumber type="number" maxFractionDigits="0" />			 		        	   		
+					       		   </p:inputText>
+					       		   <h:outputText value="" />  	
+					       		   
+					       		   <h:outputText value="N. iteration of simulation:" style="margin:10px;" />
+							       <p:inputText id="nIterSim" style="margin:10px;width:50px;" 
+							       		value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.n_simulation}">
+			 		        	   		<f:convertNumber type="number" maxFractionDigits="0" />			 		        	   		
+					       		   </p:inputText>
+					       		   <p:message for="nIterSim" id="msgNsim" display="icon" />
+			       				
+			       				<h:outputText value="Stop allocating if Vms can't fit available host:" style="margin:10px;"/>						        
+			       				<h:selectBooleanCheckbox  style="margin:10px;" value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.stopSimulationIfNotFitting}" />
+			       				<h:outputText value="" />  										
+								
+			       				
+			       				<h:outputText value="Test case ratio:" style="margin:10px;"/>
+								<h:selectOneMenu id="availableTestCase" style="margin:10px;"
+									value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.selectedTestCase}">
+									<f:selectItems value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.availableTestCases}" />									
+								</h:selectOneMenu>
+								<h:outputText value="" />  										
+								
+								<h:outputText value="Pattern assignament:" style="margin:10px;"/>
+								<h:selectOneMenu id="availablePatternAssignament" style="margin:10px;"
+									value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.selectedPatternAssignament}">
+									<f:selectItems value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.availablePatternAssignament}" />									
+								</h:selectOneMenu>	
+								<h:outputText value="" />
+								
+	       					</h:panelGrid>
+						</h:panelGroup>
+						</h:panelGroup>	
+						
+						
+							
+						<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-lg-6">							
+							    <h:commandLink value="Check reserved resource"  style="width:250px; margin:10px" 
+							    rendered="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.stopSimulationIfNotFitting and (not dataCenterController.dataCenterVirtualMachinePlacementSimulator.reservedResourceConstraintChecked or dataCenterController.dataCenterVirtualMachinePlacementSimulator.hostParameterChanged)}"
+							    		styleClass="btn btn-warning btn-lg" action="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.checkReservedResourceConstraint()}">							    	
+							   	</h:commandLink>							   		
+						</h:panelGroup>	
+						</h:panelGroup>			
+												
+												
+					</h:panelGroup>
+										
+					<h:panelGroup layout="block" styleClass="col-lg-5">
+						<h:panelGroup layout="block" id="todoArea" class="alert alert-warning " rendered="#{not dataCenterController.dataCenterVirtualMachinePlacementSimulator.allVmHasPattern or dataCenterController.dataCenterVirtualMachinePlacementSimulator.stopSimulationIfNotFitting and (not dataCenterController.dataCenterVirtualMachinePlacementSimulator.reservedResourceConstraintChecked or dataCenterController.dataCenterVirtualMachinePlacementSimulator.reservedResourceConstraintChecked and not dataCenterController.dataCenterVirtualMachinePlacementSimulator.reservedResourceConstraintPassed)}">
+								To <strong>activate </strong> the <strong>start VMs placement</strong> button you must: <br />
+								<h:outputText rendered="#{not dataCenterController.dataCenterVirtualMachinePlacementSimulator.allVmHasPattern}" 
+								 value="Assign a pattern to all VMs" /><br />							
+								<h:outputText rendered="#{not dataCenterController.dataCenterVirtualMachinePlacementSimulator.reservedResourceConstraintChecked and dataCenterController.dataCenterVirtualMachinePlacementSimulator.stopSimulationIfNotFitting}" 
+									value="Check reserved resource constraint"  /><br />
+								<h:outputText styleClass="text-danger" escape="false"
+								rendered="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.reservedResourceConstraintChecked and (not dataCenterController.dataCenterVirtualMachinePlacementSimulator.reservedResourceConstraintPassed)}" 
+									value="Reserved resource constraint not passed!Try to change reserved OS resource for host or increase the host number"  />
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="alert alert-danger" rendered="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.simulationEnded and not dataCenterController.dataCenterVirtualMachinePlacementSimulator.simulationSuccess}">
+							<h:outputText styleClass="text-center" style="font-size:28px" rendered="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.simulationEnded and not dataCenterController.dataCenterVirtualMachinePlacementSimulator.simulationSuccess}" 
+									value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.simulationResult}"  />																
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="alert alert-success" rendered="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.simulationEnded and dataCenterController.dataCenterVirtualMachinePlacementSimulator.simulationSuccess}">
+							<h:outputText styleClass="text-center" style="font-size:28px" rendered="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.simulationEnded and dataCenterController.dataCenterVirtualMachinePlacementSimulator.simulationSuccess}" 
+									value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.simulationResult}"  />
+									
+									<h:commandLink 									
+									styleClass="btn btn-success btn-lg"
+									value="Show allocation detail" action="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.buildDetailView}">
+									</h:commandLink>
+									
+						</h:panelGroup>		
+						
+						<h:panelGroup layout="block" class="alert alert-info"
+						rendered="#{not dataCenterController.dataCenterVirtualMachinePlacementSimulator.stopSimulationIfNotFitting}">
+								<h4>Added host template</h4>
+								<h:panelGrid columns="3" cellpadding="5" cellspacing="5px" style="margin:0 auto;" >
+								
+							
+							   <h:outputText value="CPU count:" style="margin:10px;" />
+						       <p:inputText style="margin:10px;width:80px;" 
+						       		value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.addedHostCpuCount}">		 		        	   				 		        	   		
+				       		   </p:inputText>
+				       		   <br/>
+				       		   
+				       		   <h:outputText value="CPU speed (MHz):" style="margin:10px;" />
+						       <p:inputText style="margin:10px;width:80px;" 
+						       		value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.addedHostCpuFreq}">		 		        	   				 		        	   		
+				       		   </p:inputText>
+				       		   <br/>
+				       		   
+				       		   <h:outputText value="Memory size (GB):" style="margin:10px;" />
+						       <p:inputText style="margin:10px;width:80px;" 
+						       		value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.addedHostMemSize}">		 		        	   				 		        	   		
+				       		   </p:inputText>
+				       		   <br/>
+				       		   
+						    	</h:panelGrid>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="alert alert-info">
+								<h4> If any GRASP heuristic is used the iteration with the minimum number of used hosts will be selected and showed as a single iteration result.</h4>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="alert alert-danger" rendered="#{(dataCenterController.dataCenterVirtualMachinePlacementSimulator.dataCenter.virtualMachineList.size() - dataCenterController.dataCenterVirtualMachinePlacementSimulator.virtualMachineList.size()) > 0}">
+								<h4> To not to break the selected test case consistency only #{dataCenterController.dataCenterVirtualMachinePlacementSimulator.virtualMachineList.size()} vms will be used for allocation.</h4>
+								<ul>
+								<ui:repeat var="test" value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.testCaseMachineAssignament}">
+								<li>#{test.testCase.name}, #vms #{test.machinesWithPattern}</li>
+								</ui:repeat>
+								</ul>
+								<h:commandLink value="View assigned pattern" target="_blank" 
+									action="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.viewAssignedTestCasePattern()}">
+								</h:commandLink>
+						</h:panelGroup>
+						
+									
+					</h:panelGroup>
+									
+																			
+				</h:panelGroup>					
+		    		<h:panelGroup layout="block" styleClass="row">
+		    			<h:panelGroup layout="block" class="alert alert-warning" rendered="#{(dataCenterController.dataCenterVirtualMachinePlacementSimulator.dataCenter.virtualMachineList.size() - dataCenterController.dataCenterVirtualMachinePlacementSimulator.virtualMachineList.size()) > 0}">
+								<h4> To not to break the selected test case consistency only #{dataCenterController.dataCenterVirtualMachinePlacementSimulator.virtualMachineList.size()} vms will be used for allocation.</h4>
+								<h5>
+								<ui:repeat var="test" value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.testCaseMachineAssignament}">
+								Test name: #{test.testCase.name}, #VMs: #{test.machinesWithPattern} -
+								</ui:repeat>
+								</h5>
+						</h:panelGroup>
+		    		</h:panelGroup>
+		    	</h:panelGroup>		    			    	
+		</h:panelGroup>
+		</h:form>	
+		
+
+						
+		<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-lg-11 bg-info" rendered="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.loadingControllerState}">
+							<h:form enctype="multipart/form-data" >
+								<h:panelGroup layout="block">					
+								<h:outputLabel for="outputControllerFileId"  value="Browse for controller state file:" />	
+								 <h:inputFile id="outputControllerFileId" 
+								 value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.uploadedControllerStateFilePart}" ></h:inputFile>
+								 </h:panelGroup>
+								 <h:panelGroup layout="block" style="float:right">
+								  <h:commandButton style="float:right;margin-right:10px"  value="Load selected file"
+									action="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.loadControllerState()}" />
+								 </h:panelGroup>				 				
+								 				 		
+								</h:form>
+						</h:panelGroup>	
+						</h:panelGroup>	
+		
+						
+		<!-- SIMULATION PROGRESS -->	
+		<h:panelGroup layout="block" styleClass="row">
+		<h:panelGroup layout="block" styleClass="col-lg-offset-1 col-lg-10">
+			<h:panelGroup layout="block" styleClass="panel panel-default">
+				<h:panelGroup layout="block" styleClass="panel-heading">Progress of simulation</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-body">
+					<h:panelGroup layout="block" styleClass="row">		
+					<c:if
+						test="#{empty dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}">
+						<h:panelGroup layout="block"
+							styleClass="progress progress-striped active">
+							<h:panelGroup layout="block"
+								styleClass="progress-bar progress-bar-success"
+								role="progressbar" aria-valuenow="100" aria-valuemin="0"
+								aria-valuemax="100" style="width: 100%;">100%</h:panelGroup>
+						</h:panelGroup>
+					</c:if>
+					<c:if
+						test="#{not empty dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}">
+						<c:if
+							test="#{35 >= dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}">
+							<h:panelGroup layout="block"
+								styleClass="progress progress-striped active">
+								<h:panelGroup layout="block"
+									styleClass="progress-bar progress-bar-danger"
+									role="progressbar"
+									aria-valuenow="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}"
+									aria-valuemin="0" aria-valuemax="100"
+									style="width: #{dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}%;">
+						#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}%
+					</h:panelGroup>
+							</h:panelGroup>
+						</c:if>
+						<c:if
+							test="#{75 >= dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation and dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation >= 36}">
+							<h:panelGroup layout="block"
+								styleClass="progress progress-striped active">
+								<h:panelGroup layout="block"
+									styleClass="progress-bar progress-bar-warning"
+									role="progressbar"
+									aria-valuenow="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}"
+									aria-valuemin="0" aria-valuemax="100"
+									style="width: #{dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}%;">
+						#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}%
+					</h:panelGroup>
+							</h:panelGroup>
+						</c:if>
+						<c:if
+							test="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation >= 76}">
+							<h:panelGroup layout="block"
+								styleClass="progress progress-striped active">
+								<h:panelGroup layout="block"
+									styleClass="progress-bar progress-bar-success"
+									role="progressbar"
+									aria-valuenow="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}"
+									aria-valuemin="0" aria-valuemax="100"
+									style="width: #{dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}%;">
+						#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.completedSimulation}%
+					</h:panelGroup>
+							</h:panelGroup>
+						</c:if>
+					</c:if>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="row text-center">
+					<h4>#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.iterationStatus}</h4>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
+		<h:panelGroup layout="block" styleClass="col-lg-offset-1 col-lg-10">
+			<h:panelGroup layout="block" styleClass="panel panel-default">
+				<h:panelGroup layout="block" styleClass="panel-heading">Log of simulation</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-body" style="overflow:auto; max-height:350px;">
+					<h:outputText
+						value="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.monitorString}"
+						escape="false" />
+				</h:panelGroup>
+			</h:panelGroup>
+
+		</h:panelGroup>
+		</h:panelGroup>
+		
+		<h:outputScript library="js" name="initTooltip.js"></h:outputScript>
+			
+		
+	</ui:define>
+</ui:composition>
+</html>

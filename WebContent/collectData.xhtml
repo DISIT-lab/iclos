@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pf="http://primefaces.org/ui"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent">
+
+<ui:composition template="/layout/template.xhtml">
+
+	<ui:define name="head">
+		<meta http-equiv="refresh"
+			content="#{collectorController.dataCollector.refreshTime}"></meta>
+		<style type="text/css">
+.ui-tabs .ui-tabs-nav {
+	background: #eee;
+}
+
+.ui-state-default,.ui-widget-content .ui-state-default,.ui-widget-header .ui-state-default
+	{
+	background: #eee;
+}
+
+.ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus
+	{
+	box-shadow: 0px 0px 8px #000;
+}
+</style>
+	</ui:define>
+	<ui:define name="body">
+		<f:event listener="#{navigator.goToCollectData()}"
+			type="preRenderView" />
+
+		<h:panelGroup layout="block">
+			<h:form role="form">
+				<h:panelGroup layout="block" styleClass="form-group">
+					<ic:inputTextBS id="inputUserSM" preAddon="Username"
+						value="#{collectorController.dataCollector.userNameNagiosCollectData}"
+						placeholder="User" required="true"
+						requiredMessage="User must be inserted."
+						rendered="#{navigator.collectData}"
+						disabled="#{collectorController.dataCollector.started}"></ic:inputTextBS>
+
+
+					<ic:inputTextBS id="inputPasswordSM" preAddon="Password"
+						placeholder="Password"
+						value="#{collectorController.dataCollector.passWordNagiosCollectData}"
+						required="true" requiredMessage="Password must be inserted."
+						rendered="#{navigator.collectData}"
+						disabled="#{collectorController.dataCollector.started}" />
+
+					<ic:inputIPBS id="inputIPAddressSM" preAddon="IPAddress"
+						placeholder="IP Address"
+						value="#{collectorController.dataCollector.ipNagiosCollectData}"
+						required="true" requiredMessage="IPAddress must be inserted."
+						rendered="#{navigator.collectData}"
+						disabled="#{collectorController.dataCollector.started}"
+						validatorId="URLValidator">
+					</ic:inputIPBS>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="form-group"
+					style="text-align:center">
+					<c:if test="#{not collectorController.oldThreadAlive}">
+						<h:commandLink id="linkStartCollectData" value="StartCollect"
+							action="#{collectorController.startCollect()}"
+							rendered="#{navigator.collectData}"
+							styleClass="btn btn-success btn-lg">
+						</h:commandLink>
+					</c:if>
+					<c:if test="#{collectorController.oldThreadAlive}">
+						<h:commandLink id="linkStopCollectData" value="StopCollect"
+							action="#{collectorController.stopCollect()}"
+							rendered="#{navigator.collectData}"
+							styleClass="btn btn-danger btn-lg">
+						</h:commandLink>
+					</c:if>
+				</h:panelGroup>
+			</h:form>
+		</h:panelGroup>
+		<h:panelGroup layout="block" style="width:100%">
+			<pf:tabView scrollable="true">
+				<c:forEach
+					items="#{collectorController.dataCollector.tabContentMap.keySet()}"
+					var="key">
+					<pf:tab title="#{key}">
+						<h:panelGroup layout="block">
+							<h:outputText
+								value="#{collectorController.dataCollector.tabContentMap.get(key)}"
+								escape="false" />
+						</h:panelGroup>
+					</pf:tab>
+				</c:forEach>
+			</pf:tabView>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

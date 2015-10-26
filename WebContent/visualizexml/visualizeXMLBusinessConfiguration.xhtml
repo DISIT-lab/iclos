@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+		<f:event
+			listener="#{navigator.goToVisualizeXMLBusinessConfiguration()}"
+			type="preRenderView" />
+
+		<h:panelGroup layout="block" styleClass="col-lg-offset-2 col-lg-8"
+			rendered="#{businessConfigurationController.sendForm}">
+			<h:panelGroup layout="block" styleClass="panel panel-info">
+				<h:panelGroup layout="block" styleClass="panel-heading">Send BusinessConfiguration To KB</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel-body">
+					<h:form>
+						<h:message styleClass="col-lg-offset-3 col-lg-6 text-danger"
+							for="ipOfKBBusinessConfiguration" style="margin-bottom: 5px"></h:message>
+						<h:panelGroup layout="block" styleClass="col-lg-12"
+							style="margin-bottom: 20px">
+							<h:inputText value="#{restAPI.protocol}" readonly="true"
+								styleClass="col-lg-1" />
+							<h:inputText id="ipOfKBBusinessConfiguration"
+								value="#{businessConfigurationController.ipOfKB}" type="text"
+								styleClass="col-lg-8" required="true">
+								<f:validator for="ipOfKBBusinessConfiguration"
+									validatorId="URLValidator" />
+							</h:inputText>
+							<h:inputText value="#{restAPIRepository.kbBusinessConfiguration}"
+								readonly="true" styleClass="col-lg-3" />
+						</h:panelGroup>
+						<h:commandLink id="sendToKBBusinessConfigurationButton"
+							action="#{businessConfigurationController.sendXmlRdfOfBusinessConfigurationToKB()}"
+							styleClass="btn btn-primary col-md-offset-4 col-lg-offset-4 col-sm-offset-4 col-xs-offset-4 col-md-2 col-lg-2 col-sm-2 col-xs-2"
+							value="Send">
+						</h:commandLink>
+						<h:commandLink id="hideSendForm"
+							action="#{businessConfigurationController.hideSendForm()}"
+							styleClass="btn btn-default col-md-2 col-lg-2 col-sm-2 col-xs-2"
+							value="Cancel" immediate="true">
+						</h:commandLink>
+					</h:form>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="col-lg-12"
+			rendered="#{businessConfigurationController.sendForm}">
+			<hr />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block"
+			rendered="#{businessConfigurationController.sendDone == 'exception' and not businessConfigurationController.sendForm}">
+			<h:panelGroup layout="block"
+				class="alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true">&times;</button>
+				<h2>
+					<strong>Exception!</strong>
+				</h2>
+				<br />
+				<h:outputText
+					value="#{businessConfigurationController.alertMessage}"
+					escape="false" />
+			</h:panelGroup>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block"
+			rendered="#{businessConfigurationController.sendDone == 'error' and not businessConfigurationController.sendForm}">
+			<h:panelGroup layout="block"
+				class="alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true">&times;</button>
+				<h2>
+					<strong>Error!</strong>
+				</h2>
+				<br />
+				<h:outputText
+					value="#{businessConfigurationController.alertMessage}"
+					escape="false" />
+			</h:panelGroup>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block"
+			rendered="#{businessConfigurationController.sendDone == 'done' and not businessConfigurationController.sendForm}">
+			<h:panelGroup layout="block"
+				class="alert alert-success alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true">&times;</button>
+				<h2>
+					<strong>Done!</strong>
+				</h2>
+				<br />
+				<h:outputText
+					value="#{businessConfigurationController.alertMessage}"
+					escape="false" />
+			</h:panelGroup>
+		</h:panelGroup>
+
+		<h:inputTextarea
+			value="#{businessConfigurationController.createdXmlRdfBusinessConfiguration}"
+			style="width:100%; max-width:100%; height:600px; max-height:600px"
+			readonly="true" />
+
+	</ui:define>
+</ui:composition>
+</html>

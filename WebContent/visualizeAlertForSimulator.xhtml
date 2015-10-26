@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:panelGroup layout="block"
+	rendered="#{businessConfigurationController.sendDone == 'exception'}">
+	<h:panelGroup layout="block"
+		class="alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-hidden="true">&times;</button>
+		<h2>
+			<strong>Exception!</strong>
+		</h2>
+		<br />
+		<h:outputText value="#{businessConfigurationController.alertMessage}"
+			escape="false" />
+	</h:panelGroup>
+</h:panelGroup>
+<h:panelGroup layout="block"
+	rendered="#{businessConfigurationController.sendDone == 'error'}">
+	<h:panelGroup layout="block"
+		class="alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-hidden="true">&times;</button>
+		<h2>
+			<strong>Error!</strong>
+		</h2>
+		<br />
+		<h:outputText value="#{businessConfigurationController.alertMessage}"
+			escape="false" />
+	</h:panelGroup>
+</h:panelGroup>
+<h:panelGroup layout="block"
+	rendered="#{businessConfigurationController.sendDone == 'done'}">
+	<h:panelGroup layout="block" class="alert alert-success">
+		<h:commandLink value="X"
+			action="#{businessConfigurationController.setSendDone('')}"
+			styleClass="close" />
+		<h2>
+			<strong>Done!</strong>
+		</h2>
+		<br />
+		<h:outputText value="#{businessConfigurationController.alertMessage}"
+			escape="false" />
+	</h:panelGroup>
+</h:panelGroup>
+</html>

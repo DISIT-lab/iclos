@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/layout/template.xhtml">
+
+	<ui:define name="head">
+		<meta http-equiv="refresh"
+			content="#{dataCenterController.dataCenterVirtualMachinePlacementSimulator.refreshTime}"></meta>
+
+<style type="text/css">
+.ui-ring-item {
+	border: 0 none;
+	width: 200px;
+}
+
+body {
+	padding-top: 130px;
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+    padding: 15px 0px ;
+    border:none;
+}
+
+.progress-bar > span {
+	color:black;
+}
+
+</style>
+	</ui:define>
+
+	<ui:define name="body">
+		
+		<f:event listener="#{navigator.beginConversation()}"
+			type="preRenderView" />
+		<f:event listener="#{navigator.goToDataCenterVirtualMachinePlacementAnalyzeResult()}"
+			type="preRenderView" />
+ 		<f:event listener="#{placementARCtrl.init()}"
+ 			type="preRenderView" />
+				
+		
+		<h:panelGroup layout="block" styleClass="row">
+			<h:panelGroup layout="block" class=" panel panel-primary">
+				<h:panelGroup layout="block" class="panel-heading clearfix">
+					<h:panelGroup layout="block" styleClass="row">
+					
+						<h:panelGroup layout="block" styleClass="col-lg-9">
+						<h3 style="margin-left:10px">Iteration -
+						<h:outputText value="#{placementARCtrl.simulationResultWrapper.testCaseName}" /> -
+						<h:outputText value="#{placementARCtrl.simulationResultWrapper.euristicMethod}" /> 
+						(<h:outputText value="#{placementARCtrl.simulationResultWrapper.euristicCoeffBuilderMethod}" />) -
+						VMs allocated:
+						<h:outputText value="#{placementARCtrl.simulationResultWrapper.usedForSimulationMachines.size()}" />											
+						</h3>
+						
+						<h:panelGrid columns="10" cellpadding="5" cellspacing="5px" style="margin:0 auto;" >
+								
+							
+							   <h:outputText value="Reserved OS resource:" style="margin:10px;" />
+						       <h:outputText value="#{placementARCtrl.simulationResultWrapper.reservedOsHostResource}">
+		 		        	   		<f:convertNumber type="percent" />		 		        	   		
+				       		   </h:outputText>
+				       		   
+						        <h:outputText value="Max risk:" style="margin:10px;" />
+						        <h:outputText value="#{placementARCtrl.simulationResultWrapper.hostMaxRisk}">
+			       					<f:convertNumber type="percent" />			       					
+			       				</h:outputText>
+			       				
+						        <h:outputText value="Max over-provisioning time:" style="margin:10px;"/>
+						        <h:outputText  style="margin:10px; width:50px;"
+						        	value="#{placementARCtrl.simulationResultWrapper.maxOverprovisioningTime}">
+			       					<f:convertNumber type="percent" />			       					
+			       				</h:outputText>					       				
+			       				
+			       				
+			       				 <h:outputText value="N. iteration for GRASP heuristic:" style="margin:10px;" />
+							       <h:outputText  style="margin:10px;width:50px;" 
+							       		value="#{placementARCtrl.simulationResultWrapper.n_runs}">
+			 		        	   		<f:convertNumber type="number" maxFractionDigits="0" />			 		        	   		
+					       		   </h:outputText>
+					       		   
+					       		   
+					       		   <h:outputText value="N. iteration of simulation:" style="margin:10px;" />
+							       <h:outputText style="margin:10px;width:50px;" 
+							       		value="#{placementARCtrl.simulationResultWrapper.n_simulation}">
+			 		        	   		<f:convertNumber type="number" maxFractionDigits="0" />			 		        	   		
+					       		   </h:outputText>
+					       		   			       							       																							       					
+	       					</h:panelGrid>
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" styleClass="col-lg-3"> 
+						
+						<h:form styleClass="form-group" rendered="#{not placementARCtrl.loadingIteration}">					
+						<h:commandButton style="float:right;margin-right:10px"  value="Load"
+							styleClass="btn btn-info btn-lg" 
+							action="#{placementARCtrl.showLoadIterationForm()}" />					
+						<h:commandButton style="float:right;margin-right:10px"  value="Save"
+							styleClass="btn btn-success btn-lg" 
+							action="#{placementARCtrl.saveIteration()}" />						
+						</h:form>							
+						</h:panelGroup>
+						
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="row" 
+					rendered="#{placementARCtrl.loadingIteration}">
+					
+					<h:form enctype="multipart/form-data" >
+					<h:panelGroup layout="block" styleClass="col-lg-6">					
+					<h:outputLabel for="outputFileId"  value="You can browse for other result file:" />	
+					 <h:inputFile id="outputFileId" value="#{placementARCtrl.uploadediterationResult}" ></h:inputFile>
+					 </h:panelGroup>
+					 <h:panelGroup layout="block" styleClass="col-lg-6">
+					 <h:commandButton style="float:right;margin-right:10px"  value="Cancel"
+						styleClass="btn btn-default btn-lg" 
+						action="#{placementARCtrl.hideLoadIterationForm()}" />
+					 <h:commandButton style="float:right;margin-right:10px"  value="Load selected file"
+						styleClass="btn btn-info btn-lg" 
+						action="#{placementARCtrl.loadIteration()}" />
+					 </h:panelGroup>				 								 		
+					</h:form>
+					
+									
+					</h:panelGroup>
+				</h:panelGroup>					
+			<h:panelGroup layout="block" class="panel-body">					
+				<table class="table table-striped text-center dataTableGrid">
+					<thead>
+					<th class="text-center">Id</th>
+					<th class="text-center">Time (s)</th>
+					<th class="text-center">Used Host</th>
+					<th class="text-center">CPU avg</th>
+					<th class="text-center">CPU in range</th>
+					<th class="text-center">MEM avg</th>				
+					<th class="text-center">MEM in range</th>
+					<th class="text-center">OVERALL avg</th>
+					<th class="text-center">OVERALL in range</th>
+					<th class="text-center"></th>
+					</thead>	
+					<tbody>
+						<ui:repeat var="iter" value="#{placementARCtrl.simulationResultWrapper.placementResults}">
+						<tr>
+							<td>#{iter.id}</td>
+							<td><h:outputText value="#{iter.iterationTime /1000}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="3" pattern="#0.000"/>
+							    </h:outputText>
+							</td>
+							<td>#{iter.usedHost.size()}</td>
+							<td><h:outputText value="#{iter.dataCenterMachinePlacement.cpu_avg_usage * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>
+							<td><h:outputText value="#{iter.dataCenterMachinePlacement.cpu_in_range * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>
+							<td><h:outputText value="#{iter.dataCenterMachinePlacement.memory_avg_usage * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>
+							<td><h:outputText value="#{iter.dataCenterMachinePlacement.memory_in_range * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>
+							<td><h:outputText value="#{iter.dataCenterMachinePlacement.overall_avg_usage * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>
+							<td><h:outputText value="#{iter.dataCenterMachinePlacement.overall_in_range * 100}">
+							        <f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00"/>
+							    </h:outputText>
+							</td>						
+							<td>
+								<h:form>
+									<h:commandLink value="View" target="_blank" 
+									action="#{placementARCtrl.showIterationDetail(iter.id)}">
+									</h:commandLink>
+								</h:form>					
+							</td>
+						</tr>
+						</ui:repeat>
+					</tbody>
+				</table>		
+			</h:panelGroup>
+			</h:panelGroup>
+						
+			<h:panelGroup layout="block" class=" panel panel-info">
+				<h:panelGroup layout="block" class="panel-heading clearfix">
+					<h:panelGroup layout="block" styleClass="row">
+					
+						<h:panelGroup layout="block" styleClass="col-lg-3">
+						<h3 style="margin-left:10px">Business configuration detail</h3>
+						</h:panelGroup>
+																	
+					</h:panelGroup>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="panel-body">
+					<h:panelGroup layout="block" styleClass="row">					
+					<h:panelGroup layout="block" styleClass="col-lg-12">
+					<table class="table table-striped text-center dataTableGrid">
+					<thead>
+					<tr>
+					<th class="text-center" colspan="3">Virtual Machines</th>
+					</tr>
+					<tr>
+					<th class="text-center">Name</th>
+					<th class="text-center">CPU Thoughtput MHz</th>													
+					<th class="text-center">MEM size GB</th>
+					</tr>
+					</thead>	
+					<tbody>
+					<ui:repeat var="machine" value="#{placementARCtrl.simulationResultWrapper.usedForSimulationMachines}">
+					<tr>
+					<td>#{machine.hasName}</td>
+					<td>#{machine.cpuThroughtput}</td>
+					<td>#{machine.hasMemorySize}</td>										
+					</tr>
+					</ui:repeat>
+					</tbody>
+					</table>
+					</h:panelGroup>
+					</h:panelGroup>	
+				</h:panelGroup>
+				</h:panelGroup>			
+			
+			
+		</h:panelGroup>
+		
+	<h:outputScript library="js" name="initDataTable.js"></h:outputScript>
+	
+	</ui:define>
+</ui:composition>
+</html>

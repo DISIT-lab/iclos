@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+		<h:form>
+		<h:panelGroup layout="block" class="alert alert-info" rendered="#{empty dataCenterSimulator.hostMachineSimulatorList.get(dataCenterSimulator.currentHostMachineSimulator).virtualMachineSimulatorList}">
+			<h2><strong>Information!</strong> <br /> <h:outputText value="This hostMachine hasn't any virtualMachine" escape="false"/> </h2>
+		</h:panelGroup>
+			<ui:repeat var="virtualMachineSimulator"
+				value="#{dataCenterSimulator.hostMachineSimulatorList.get(dataCenterSimulator.currentHostMachineSimulator).virtualMachineSimulatorList}"
+				varStatus="virtualMachineSimulatorStatus">
+				<h:panelGroup layout="block" styleClass="panel panel-default">
+					<h:panelGroup layout="block" styleClass="panel-heading">
+						<h3 class="panel-title">#{virtualMachineSimulator.uriSimulatedEntity} - <strong># IS: </strong>#{virtualMachineSimulator.icaroServiceSimulatorList.size()}</h3>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" styleClass="panel-body">
+						<h:panelGrid columns="3" styleClass="col-md-12 col-lg-12"
+							columnClasses="col-lg-4, col-lg-4, col-lg-4">
+							<h:panelGroup layout="block" styleClass="col-lg-12">
+								<p:poll interval="#{dataCenterSimulator.refreshTime}" update="cpu" />
+								<p:lineChart id="cpu"
+									value="#{dataCenterSimulator.dataCenterSimulatorMonitor.cartesianChartModelCPUListList[dataCenterSimulator.currentHostMachineSimulator].get(virtualMachineSimulatorStatus.index)}"
+									title="#{dataCenterSimulator.dataCenterSimulatorMonitor.cartesianChartModelCPUListList[dataCenterSimulator.currentHostMachineSimulator].get(virtualMachineSimulatorStatus.index).title}"
+									rendered="#{not empty dataCenterSimulator.dataCenterSimulatorMonitor.cartesianChartModelCPUListList[dataCenterSimulator.currentHostMachineSimulator].get(virtualMachineSimulatorStatus.index)}"
+									maxY="#{virtualMachineSimulator.cpuMhz}"
+									minY="0" minX="0"
+									maxX="#{dataCenterSimulator.dataCenterSimulatorMonitor.sampletovisualize}" />
+							</h:panelGroup>
+							<h:panelGroup layout="block">
+								<p:poll interval="#{dataCenterSimulator.refreshTime}" update="memory"/>
+								<p:lineChart id="memory"
+									value="#{dataCenterSimulator.dataCenterSimulatorMonitor.cartesianChartModelMemoryListList[dataCenterSimulator.currentHostMachineSimulator].get(virtualMachineSimulatorStatus.index)}"
+									title="#{dataCenterSimulator.dataCenterSimulatorMonitor.cartesianChartModelMemoryListList[dataCenterSimulator.currentHostMachineSimulator].get(virtualMachineSimulatorStatus.index).title}"
+									rendered="#{not empty dataCenterSimulator.dataCenterSimulatorMonitor.cartesianChartModelMemoryListList[dataCenterSimulator.currentHostMachineSimulator].get(virtualMachineSimulatorStatus.index)}"
+									maxY="#{virtualMachineSimulator.memory}"
+									minY="0"
+									minX="0"
+									maxX="#{dataCenterSimulator.dataCenterSimulatorMonitor.sampletovisualize}"/>
+							</h:panelGroup>
+							<h:panelGroup layout="block">
+								<p:poll interval="#{dataCenterSimulator.refreshTime}" update="storage"/>
+								<p:lineChart id="storage"
+									value="#{dataCenterSimulator.dataCenterSimulatorMonitor.cartesianChartModelStorageListList[dataCenterSimulator.currentHostMachineSimulator].get(virtualMachineSimulatorStatus.index)}"
+									title="#{dataCenterSimulator.dataCenterSimulatorMonitor.cartesianChartModelStorageListList[dataCenterSimulator.currentHostMachineSimulator].get(virtualMachineSimulatorStatus.index).title}"
+									rendered="#{not empty dataCenterSimulator.dataCenterSimulatorMonitor.cartesianChartModelStorageListList[dataCenterSimulator.currentHostMachineSimulator].get(virtualMachineSimulatorStatus.index)}"
+									maxY="#{virtualMachineSimulator.storage}"
+									minY="0"
+									minX="0"
+									maxX="#{dataCenterSimulator.dataCenterSimulatorMonitor.sampletovisualize}"/>
+							</h:panelGroup>
+						</h:panelGrid>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:repeat>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

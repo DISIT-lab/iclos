@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+		<f:event listener="#{navigator.goToServiceMetric()}"
+			type="preRenderView" />
+		<f:event listener="#{navigator.beginConversation()}"
+			type="preRenderView" />
+		<h:form id="principalForm">
+			<h:panelGroup layout="block" class="panel panel-primary">
+				<h:panelGroup layout="block" class="panel-heading clearfix">
+					<h:panelGroup layout="block" class="row">
+						<h:panelGroup layout="block" class="btn-group">
+							<h:commandLink
+								action="#{serviceMetricViewer.addPanelServiceMetric()}"
+								value="Add ServiceMetric"
+								class="btn btn-primary btn-lg dropdown-toggle" />
+							<h:commandLink id="createTopButtonActive"
+								action="#{serviceMetricController.createServiceMetric()}"
+								styleClass="btn btn-primary btn-lg" 
+								rendered="#{serviceMetricViewer.buttonCreateXML}" value="Create XML">
+								<f:param name="cid" value="#{navigator.conversation.id}" />
+							</h:commandLink>
+							<h:link id="createTopButtonDisabled"
+								disabled="#{not serviceMetricViewer.buttonCreateXML}"
+								styleClass="btn btn-primary btn-lg disabled" 
+								rendered="#{not serviceMetricViewer.buttonCreateXML}"
+								value="Create XML">
+							</h:link>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="panel-body">
+					<h:panelGroup layout="block" id="panelBodyServiceMetricPrincipal"
+						binding="#{serviceMetricViewer.panelBodyServiceMetricPrincipal}">
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

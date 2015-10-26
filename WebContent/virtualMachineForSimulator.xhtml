@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent">
+
+	<h:panelGroup layout="block" class="panel panel-default">
+		<h:panelGroup layout="block" class="panel-heading clearfix">
+			<h:panelGroup layout="block" class="row">
+				<h:panelGroup layout="block" class="btn-group">
+					<h:commandLink
+						action="#{virtualMachineForSimulatorViewer.addPanelVirtualMachine()}"
+						value="Add VirtualMachine"
+						class="btn btn-default dropdown-toggle" />
+					<h:commandLink id="nextTopButtonActive"
+						action="#{fakeSCE.createVirtualMachineOnDataCenter()}"
+						styleClass="btn btn-default"
+						rendered="#{virtualMachineForSimulatorViewer.buttonNext}" value="Next">
+						<f:param name="cid" value="#{navigator.conversation.id}" />
+					</h:commandLink>
+					<h:link id="nextTopButtonDisabled"
+						disabled="#{not virtualMachineForSimulatorViewer.buttonNext}"
+						styleClass="btn btn-default disabled"
+						rendered="#{not virtualMachineForSimulatorViewer.buttonNext}" value="Next">
+					</h:link>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
+		<h:panelGroup layout="block" class="panel-body">
+			<h:panelGroup layout="block"
+				rendered="#{!virtualMachineForSimulatorViewer.buttonNext}">
+				<h:panelGroup layout="block"
+					class="alert alert-warning alert-dismissable">
+							To <strong>activate </strong> the <strong>next</strong> button you must: <br />
+								#{virtualMachineForSimulatorViewer.entityToAddMessage}
+						</h:panelGroup>
+			</h:panelGroup>
+			<br></br>
+			<h:panelGroup layout="block" id="panelBodyVirtualMachinePrincipal"
+				binding="#{virtualMachineForSimulatorViewer.panelBodyVirtualMachinePrincipal}">
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:panelGroup>
+
+</html>

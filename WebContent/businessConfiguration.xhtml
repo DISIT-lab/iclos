@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ic="http://java.sun.com/jsf/composite/inputComponent">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+
+		<f:event listener="#{navigator.goToBusinessConfiguration()}"
+			type="preRenderView" />
+		<h:form id="principalForm">
+			<h:panelGroup layout="block" class="panel panel-primary">
+				<h:panelGroup layout="block" class="panel-heading clearfix">
+					<h:panelGroup layout="block" class="row">
+						<h:panelGroup layout="block" class="btn-group">
+							<button type="button"
+								class="btn btn-primary btn-lg dropdown-toggle"
+								data-toggle="dropdown">
+								Add <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><h:commandLink
+										action="#{businessConfigurationViewer.addPanelIcaroApplication()}"
+										value="Icaro Application" /></li>
+								<li><h:commandLink
+									action="#{businessConfigurationViewer.addPanelIcaroTenant()}"
+									value="Icaro Tenant" /></li>
+								<li><h:commandLink
+										action="#{businessConfigurationViewer.addPanelSlAgreement()}"
+										value="SLAgreement"
+										rendered="#{businessConfigurationViewer.countSlAgreement == 0}" /></li>
+								<li><h:commandLink
+										action="#{businessConfigurationViewer.addPanelCreator()}"
+										value="Creator"
+										rendered="#{businessConfigurationViewer.countCreator == 0}" /></li>
+							</ul>
+						</h:panelGroup>
+
+						<h:commandLink id="createXMLTopButtonActive"
+							action="#{businessConfigurationController.createBusinessConfigurationXML()}"
+							styleClass="btn btn-primary btn-lg"
+							rendered="#{businessConfigurationViewer.buttonCreateXML}"
+							value="Create XML">
+							<f:actionListener binding="#{utility.reset()}" />
+						</h:commandLink>
+
+						<h:commandLink id="createXMLTopButtonDisabled"
+							disabled="#{not businessConfigurationViewer.buttonCreateXML}"
+							styleClass="btn btn-primary btn-lg disabled"
+							rendered="#{not businessConfigurationViewer.buttonCreateXML}"
+							value="Create XML">
+						</h:commandLink>
+
+					</h:panelGroup>
+
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="panel-body">
+
+					<h:panelGroup layout="block"
+						rendered="#{!businessConfigurationViewer.buttonCreateXML}">
+						<h:panelGroup layout="block"
+							class="alert alert-warning alert-dismissable">
+							To <strong>activate </strong> the <strong>create XML</strong> button you must: <br />
+								#{businessConfigurationViewer.entityToAddMessage}
+						</h:panelGroup>
+					</h:panelGroup>
+
+					<ic:inputTextBS preAddon="urn:cloudicaro:BusinessConfiguration:"
+						requiredMessage="This field must not be empty"
+						value="#{businessConfigurationController.businessConfiguration.localUri}"
+						id="inputTextBusinessConfigurationLocalUri" required="true"
+						placeholder="Insert localUri"></ic:inputTextBS>
+					<ic:inputTextBS preAddon="hasName"
+						requiredMessage="This field must not be empty"
+						value="#{businessConfigurationController.businessConfiguration.hasName}"
+						id="inputTextBusinessConfigurationName" required="true"
+						placeholder="Insert name"></ic:inputTextBS>
+					<ic:inputTextBS preAddon="hasIdentifier"
+						requiredMessage="This field must not be empty"
+						value="#{businessConfigurationController.businessConfiguration.hasIdentifier}"
+						id="inputTextBusinessConfigurationIdentifier" required="true"
+						placeholder="Insert identifier"></ic:inputTextBS>
+					<ic:inputTextBS preAddon="hasContractId"
+						requiredMessage="This field must not be empty"
+						value="#{businessConfigurationController.businessConfiguration.hasContractId}"
+						id="inputTextBusinessConfigurationContract" required="true"
+						placeholder="Insert contractId"></ic:inputTextBS>
+					<br></br>
+					<h:panelGroup layout="block" id="panelBodyBusinessConfiguration"
+						binding="#{businessConfigurationViewer.panelBusinessConfigurationBody}">
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
